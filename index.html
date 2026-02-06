@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta description="Maze Puzzle Game">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/Buildings/Blue Buildings/Barracks.png">
+    <title>Maze & Conquest</title>
+</head>
+<body>
+<div id="mainMenu">
+    <div id="titleWrapper">
+        <h1>Maze & Conquest</h1>
+    </div>
+    <div id="buttonsWrapper">
+        <div id="startButton" class="menuButtons">
+            <h2>Start</h2>
+        </div>
+        <div id="costumizeButton" class="menuButtons">
+            <h2>Customize</h2>
+        </div>
+    </div>
+    <div id="sideButtonsWrapper">
+        <div id="aboutButton" class="sideButtons">
+            <img src="assets/UI Elements/UI Elements/Icons/Icon_11.png" alt="about">
+        </div>
+        <div id="settingsButton" class="sideButtons">
+            <img src="assets/UI Elements/UI Elements/Icons/Icon_10.png" alt="about">
+        </div>
+
+    </div>
+
+
+    <div id="aboutWindow" class="centerOffscreen">
+        <h2>Credits</h2>
+        <div class="settingsX"></div>
+        <div id="aboutText">
+            <h4>Author:</h4>
+            <a href="https://github.com/DaOnlyDelta/MazeAndConquest" target="_blank">
+                <div class="redBanner"><h3>Enej Leskovar</h3></div>
+            </a>
+            <h4>Assets by:</h4>
+            <a href="https://pixelfrog-assets.itch.io" target="_blank">
+                <div class="redBanner"><h3>PixelFrogStudio</h3></div>
+            </a>
+        </div>
+    </div>
+    <div id="settingsWindow" class="centerOffscreen">
+        <h2>Settings</h2>
+        <div class="settingsX"></div>
+        <div id="settingsWrapper">
+            <div class="settingsOption" id="settingsAudioOption"><h3>Audio</h3></div>
+            <div class="settingsOption" id="settingsGameplayOption"><h3>Gameplay</h3></div>
+            <div class="settingsOption" id="settingsKeybindsOption"><h3>Keybinds</h3></div>
+        </div>
+    </div>
+    <div id="settingsHolder">
+        <div id="settingsAudio" class="centerOffscreen">
+            <div class="settingsX"></div>
+            <div id="audioWrapper">
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="veil"></div>
+</body>
+<script src="js/drawBanner.js"></script>
+<script src="js/drawPaper.js"></script>
+<script src="js/sounds.js"></script>
+<script src="js/playSound.js"></script>
+<script src="js/menu.js"></script>
+</html>
