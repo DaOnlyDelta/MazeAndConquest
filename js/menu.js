@@ -18,6 +18,15 @@
         });
     });
 
+    const freeMusic = document.getElementById('musicImageHolder');
+    freeMusic.addEventListener('click', () => {
+        if (freeMusic.classList.contains('off')) {
+            freeMusic.classList.remove('off');
+            return;
+        }
+        freeMusic.classList.add('off');
+    });
+
     const aboutWindow = document.getElementById('aboutWindow');
     const settingsWindow = document.getElementById('settingsWindow');
     const settingsXs = Array.from(document.getElementsByClassName('settingsX'));
@@ -90,6 +99,11 @@
     });
 
     drawPaper(settingsAudio, 4, 3);
+
+    const musicSlider = document.getElementById('musicSlider');
+    const seSlider = document.getElementById('seSldier');
+    drawSliderBorder(musicSlider, 4, 1);
+    drawSliderBorder(seSlider, 4, 1);
 
     veil.addEventListener('click', (event) => {
         // Only close when clicking the veil backdrop itself (not inner content)
