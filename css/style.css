@@ -63,18 +63,19 @@ a {
     position: absolute;
     left: 50%;
     top: 8%;
-    transform: translateX(-50%) scale(1);
     transform-origin: top center;
-    will-change: transform;
+    translate: -50% 0;
+    scale: 1;
+    will-change: scale;
     animation: titlePulse 2.6s ease-in-out infinite;
 }
 
 @keyframes titlePulse {
     0%, 100% {
-        transform: translateX(-50%) scale(0.97);
+        scale: 0.97;
     }
     50% {
-        transform: translateX(-50%) scale(1.03);
+        scale: 1.03;
     }
 }
 
@@ -93,13 +94,8 @@ a {
     width: 172px;
     height: 94px;
     transform: scale(1.5);
-    transition: transform ease 0.1s;
     background: url('../assets/UI Elements/UI Elements/Buttons/SmallBlueSquareButton_Regular2.png') no-repeat;
     cursor: var(--cursor-pointer);
-}
-
-#buttonsWrapper .menuButtons:hover {
-    transform: scale(1.6);
 }
 
 #buttonsWrapper .menuButtons.pressed {
@@ -138,7 +134,6 @@ a {
     position: relative;
     height: 94px;
     width: 90px;
-    transition: transform ease 0.1s;
     background: url('../assets/UI Elements/UI Elements/Buttons/SmallBlueSquareButton_Regular.png') no-repeat;
     cursor: var(--cursor-pointer);
 }
@@ -153,10 +148,6 @@ a {
 
 #sideButtonsWrapper .sideButtons.pressed img {
     top: 53%;
-}
-
-#sideButtonsWrapper .sideButtons:hover {
-    transform: scale(1.1);
 }
 
 #sideButtonsWrapper .sideButtons.pressed {
@@ -192,10 +183,23 @@ a {
     background-image: url("../assets/UI Elements/UI Elements/Icons/Icon_09.png");
     cursor: var(--cursor-pointer);
     z-index: 1001;
+    scale: 1;
+    transition: scale 0.1s ease;
 }
 
+.hoverResize1,
+.hoverResize2 {
+    scale: 1;
+    transition: scale 0.1s ease;
+}
+
+.hoverResize1:hover {
+    scale: 1.1;
+}
+
+.hoverResize2:hover,
 .settingsX:hover {
-    transform: scale(1.2);
+    scale: 1.2;
 }
 
 #aboutWindow #aboutText {
@@ -213,10 +217,6 @@ a {
     color: var(--primary-text-color);
 }
 
-#aboutWindow #aboutText .redBanner:hover {
-    transform: scale(1.1);
-}
-
 #aboutWindow #aboutText h3 {
     font-size: 3.2rem;
 }
@@ -232,7 +232,8 @@ a {
 }
 
 #settingsWindow h2,
-#aboutWindow h2 {
+#aboutWindow h2,
+#settingsHolder h2 {
     position: absolute;
     top: 30px;
     left: 50%;
@@ -263,10 +264,6 @@ a {
     justify-content: center;
 }
 
-#settingsWindow #settingsWrapper .settingsOption:hover {
-    transform: scale(1.1);
-}
-
 #settingsWindow #settingsWrapper .settingsOption h3,
 #aboutWindow #aboutText h3 {
     position: absolute;
@@ -289,24 +286,47 @@ a {
     gap: 50px;
 }
 
-#settingsHolder #settingsAudio #audioWrapper .row #MusicImage {
+#settingsHolder #settingsAudio #audioWrapper .row #musicImage {
     background-image: url('../assets/UI Elements/UI Elements/Icons/Icon_12.png');
     height: 64px;
     width: 64px;
     cursor: var(--cursor-pointer);
 }
 
-#settingsHolder #settingsAudio #audioWrapper .row #seImage {
+#settingsHolder #settingsAudio #audioWrapper .row #musicImage.off {
+    background-image: url('../assets/UI Elements/UI Elements/Icons/Icon_12X.png');
+}
+
+#settingsHolder #settingsAudio #audioWrapper .row #sfxImage {
     background-image: url('../assets/UI Elements/UI Elements/Icons/Icon_13.png');
     height: 64px;
     width: 64px;
     cursor: var(--cursor-pointer);
 }
 
+#settingsHolder #settingsAudio #audioWrapper .row #sfxImage.off {
+    background-image: url('../assets/UI Elements/UI Elements/Icons/Icon_13X.png');
+}
+
 #settingsHolder #settingsAudio #audioWrapper .row {
-    display: grid;
-    grid-template-columns: 64px auto;
+    display: flex;
+    flex-direction: row;
     gap: 60px;
+    height: 64px;
+}
+
+#settingsHolder #settingsAudio #audioWrapper .row div {
+    position: relative;
+    z-index: 15;
+}
+
+#settingsHolder #settingsAudio #audioWrapper .row div .sliderHolder {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 0;
+    z-index: 20;
+    overflow: hidden;
 }
 
 
@@ -318,10 +338,6 @@ a {
     height: 64px;
     width: 64px;
     cursor: var(--cursor-pointer);
-}
-
-#freeMusic #musicImageHolder:hover {
-    transform: scale(1.2);
 }
 
 #freeMusic #musicImageHolder.off {

@@ -14,18 +14,18 @@
         <h1>Maze & Conquest</h1>
     </div>
     <div id="buttonsWrapper">
-        <div id="startButton" class="menuButtons">
+        <div id="startButton" class="menuButtons hoverResize1">
             <h2>Start</h2>
         </div>
-        <div id="costumizeButton" class="menuButtons">
+        <div id="costumizeButton" class="menuButtons hoverResize1">
             <h2>Customize</h2>
         </div>
     </div>
     <div id="sideButtonsWrapper">
-        <div id="aboutButton" class="sideButtons">
+        <div id="aboutButton" class="sideButtons hoverResize1">
             <img src="assets/UI Elements/UI Elements/Icons/Icon_11.png" alt="about">
         </div>
-        <div id="settingsButton" class="sideButtons">
+        <div id="settingsButton" class="sideButtons hoverResize1">
             <img src="assets/UI Elements/UI Elements/Icons/Icon_10.png" alt="about">
         </div>
 
@@ -38,11 +38,11 @@
         <div id="aboutText">
             <h4>Author:</h4>
             <a href="https://github.com/DaOnlyDelta/MazeAndConquest" target="_blank">
-                <div class="redBanner"><h3>Enej Leskovar</h3></div>
+                <div class="redBanner hoverResize1"><h3>Enej Leskovar</h3></div>
             </a>
             <h4>Assets by:</h4>
             <a href="https://pixelfrog-assets.itch.io" target="_blank">
-                <div class="redBanner"><h3>PixelFrogStudio</h3></div>
+                <div class="redBanner hoverResize1"><h3>PixelFrogStudio</h3></div>
             </a>
         </div>
     </div>
@@ -50,25 +50,24 @@
         <h2>Settings</h2>
         <div class="settingsX"></div>
         <div id="settingsWrapper">
-            <div class="settingsOption" id="settingsAudioOption"><h3>Audio</h3></div>
-            <div class="settingsOption" id="settingsGameplayOption"><h3>Gameplay</h3></div>
-            <div class="settingsOption" id="settingsKeybindsOption"><h3>Keybinds</h3></div>
+            <div class="settingsOption hoverResize1" id="settingsAudioOption"><h3>Audio</h3></div>
+            <div class="settingsOption hoverResize1" id="settingsGameplayOption"><h3>Gameplay</h3></div>
+            <div class="settingsOption hoverResize1" id="settingsKeybindsOption"><h3>Keybinds</h3></div>
         </div>
     </div>
     <div id="settingsHolder">
         <div id="settingsAudio" class="centerOffscreen">
+            <h2>Audio</h2>
             <div class="settingsX"></div>
             <div id="audioWrapper">
                 <div class="row">
-                    <div id="MusicImage"></div>
+                    <div id="musicImage"></div>
                     <div id="musicSlider">
-
                     </div>
                 </div>
                 <div class="row">
-                    <div id="seImage"></div>
-                    <div id="seSldier">
-
+                    <div id="sfxImage"></div>
+                    <div id="sfxSldier">
                     </div>
                 </div>
             </div>
@@ -76,16 +75,16 @@
 
     </div>
     <div id="freeMusic">
-        <div id="musicImageHolder">
+        <div id="musicImageHolder" class="hoverResize2"></div>
     </div>
 </div>
 
 <div id="veil"></div>
 </body>
-<script src="js/drawBanner.js"></script>
-<script src="js/drawPaper.js"></script>
-<script src="js/drawSliderBorder.js"></script>
-<script src="js/sounds.js"></script>
-<script src="js/playSound.js"></script>
-<script src="js/menu.js"></script>
+<script src="js/menu/drawBanner.js"></script>
+<script src="js/menu/drawPaper.js"></script>
+<script src="js/menu/drawSliderBorder.js"></script>
+<script src="js/menu/drawSliderLine.js"></script>
+<script src="js/menu/playSound.js"></script>
+<script src="js/menu/menu.js"></script>
 </html>
