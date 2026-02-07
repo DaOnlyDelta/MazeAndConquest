@@ -1,15 +1,17 @@
-// Minimal audio.
-// SFX: playSound('hover' | 'click' | 'click2' | 'gameOver' | 'winner')
-// Controls: setSfxVolume(0..1), setMusicVolume(0..1), setMusicEnabled(true|false)
-
+// ==========================================================
+// Audio globals (read by menu.js)
+// ==========================================================
+// - `musicEnabled`: toggles music volume between `musicVolume` and 0
+// - `sfxEnabled`: blocks SFX playback when false
 let sfxVolume = 0.1;
 let musicVolume = 0.1;
-
-// used by menu.js to sync icons
 let musicEnabled = true;
 let sfxEnabled = true;
 
 (function () {
+	// ==========================================================
+	// Setup
+	// ==========================================================
 	let audioUnlocked = false;
 
 	const sfxByKey = {
@@ -33,6 +35,9 @@ let sfxEnabled = true;
 	music.preload = 'auto';
 	music.loop = false;
 
+	// ==========================================================
+	// Helpers
+	// ==========================================================
 	function applyMusicVolume() {
 		music.volume = musicEnabled ? musicVolume : 0;
 	}
@@ -52,6 +57,9 @@ let sfxEnabled = true;
 		safePlay(music);
 	}
 
+	// ==========================================================
+	// Music looping
+	// ==========================================================
 	music.addEventListener('ended', () => {
 		musicIndex = (musicIndex + 1) % musicPlaylist.length;
 		music.src = musicPlaylist[musicIndex];
@@ -59,8 +67,13 @@ let sfxEnabled = true;
 		startMusicIfPossible();
 	});
 
+	// ==========================================================
+	// Public API (used by menu.js)
+	// ==========================================================
 	window.playSound = function (effect) {
-		if (!audioUnlocked && effect === 'hover' || !sfxEnabled) return;
+		// Avoid autoplay-policy errors on hover before the first user interaction.
+		if ((!audioUnlocked && effect === 'hover') || !sfxEnabled) return;
+
 		const audio = sfxByKey[effect] || new Audio(effect);
 		audio.volume = sfxVolume;
 		audio.currentTime = 0;
@@ -79,16 +92,20 @@ let sfxEnabled = true;
 		applyMusicVolume();
 	};
 
-	// "Mute" toggle: just sets music.volume to 0 (no pause/restart).
+	// "Mute" toggle: sets music volume to 0 (no pause/restart).
 	window.setMusicEnabled = function (enabled) {
 		musicEnabled = Boolean(enabled);
 		applyMusicVolume();
+
 		// If user unmutes after unlock and music hasn't started yet, start it.
 		if (musicEnabled && audioUnlocked && music.paused) {
 			startMusicIfPossible();
 		}
 	};
 
+	// ==========================================================
+	// Unlock (browser policy)
+	// ==========================================================
 	function unlockAudioOnce() {
 		if (audioUnlocked) return;
 		audioUnlocked = true;

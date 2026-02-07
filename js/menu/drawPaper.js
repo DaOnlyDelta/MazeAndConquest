@@ -1,61 +1,42 @@
+// Draws the parchment-style paper background into a canvas appended to `parentDiv`.
+// `paperWidth`/`paperHeight` are counts of middle tiles (not pixels).
 function drawPaper(parentDiv, paperWidth, paperHeight) {
+    // Canvas setup
     const canvas = document.createElement('canvas');
     parentDiv.appendChild(canvas);
     const ctx = canvas.getContext('2d');
 
-    /*
-    ctx.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-    
-    sx, sy, sWidth, sHeight = which rectangle you cut out of the source image (measured in source-image pixels)
-    dx, dy, dWidth, dHeight = where/how big you draw it on the canvas (canvas pixels)
-    */
-   
-   let sx = 0, sy = 0;
-   let dx = 0, dy = 0;
-   const scale = 1.5;
-   
-   // Corners:
-   const sWidthC = 54, sHeightC = 43;
-   
-   // Top Sides:
-   const sWidthT = 64, sHeightT = 43;
-   
-   // Sides
-   const sWidthS = 54, sHeightS = 64;
-   
-   // Middle:
-   const sWidthM = 64, sHeightM = 64;
-   
-   // Calculate the width by the paperWidth 546 700
-    canvas.height = (2 * sHeightT + paperHeight * sHeightM) * scale;
-    canvas.width = (2 * sWidthS + paperWidth * sHeightM) * scale;
+    // ==========================================================
+    // Sprite tile sizes (in source pixels)
+    // ==========================================================
+    const scale = 1.5;
 
-    /* 
-    in the img:
-    left top corner:
-        sx = 118;
-        sy = 0;
-    
-    top side:
-        sx = 0;
-        sy = 107;
-    
-    top right corner:
-        sx = 246;
-        sy = 0;
-    
-    left side:
-        sx = 0;
-        sy = 107;
-    
-    middle:
-        sx = 118
-        sy = 107
-    */
+    const cornerW = 54;
+    const cornerH = 43;
+
+    const topW = 64;
+    const topH = 43;
+
+    const sideW = 54;
+    const sideH = 64;
+
+    const midW = 64;
+    const midH = 64;
+
+    // Canvas size (in canvas pixels)
+    canvas.height = (2 * topH + paperHeight * midH) * scale;
+    canvas.width = (2 * sideW + paperWidth * midW) * scale;
+
+    // ==========================================================
+    // Render
+    // ==========================================================
+    let sx = 0;
+    let sy = 0;
+    let dx = 0;
+    let dy = 0;
 
     const img = new Image();
     // Relative URLs resolve against the document URL (index.html), not this JS file.
-    // On GitHub Pages the site is served from /<repo>/, so using '../assets' breaks.
     img.src = './assets/UI Elements/UI Elements/Papers/SpecialPaper.png';
     img.onerror = (e) => {
         console.error('Failed to load paper image:', img.src, e);
@@ -63,62 +44,70 @@ function drawPaper(parentDiv, paperWidth, paperHeight) {
     img.onload = () => {
         ctx.imageSmoothingEnabled = false;
 
-        // Draw left top corner
-        ctx.drawImage(img, sx, sy, sWidthC, sHeightC, dx, dy, sWidthC * scale, sHeightC * scale);
-        dx += Math.floor(sWidthC * scale);
+        // ------------------------------
+        // Top row
+        // ------------------------------
+        // Top-left corner
+        ctx.drawImage(img, sx, sy, cornerW, cornerH, dx, dy, cornerW * scale, cornerH * scale);
+        dx += Math.floor(cornerW * scale);
 
-        // Draw upper line
+        // Top edge
         sx = 118;
         for (let i = 0; i < paperWidth; i++) {
-            ctx.drawImage(img, sx, sy, sWidthT, sHeightT, dx, dy, sWidthT * scale, sHeightT * scale);
-            dx += Math.floor(sWidthT * scale);
+            ctx.drawImage(img, sx, sy, topW, topH, dx, dy, topW * scale, topH * scale);
+            dx += Math.floor(topW * scale);
         }
 
-        // Draw right top corner
+        // Top-right corner
         sx = 246;
-        ctx.drawImage(img, sx, sy, sWidthC, sHeightC, dx, dy, sWidthC * scale, sHeightC * scale);
+        ctx.drawImage(img, sx, sy, cornerW, cornerH, dx, dy, cornerW * scale, cornerH * scale);
 
-        // Draw left to right top to bottom
+        // ------------------------------
+        // Middle rows
+        // ------------------------------
         dx = 0;
-        dy += Math.floor(sHeightC * scale);
+        dy += Math.floor(cornerH * scale);
         sy = 107;
         for (let i = 0; i < paperHeight; i++) {
-
             // Left side
             sx = 0;
-            ctx.drawImage(img, sx, sy, sWidthS, sHeightS, dx, dy, sWidthS * scale, sHeightS * scale);
-            dx += Math.floor(sWidthS * scale);
-            sx = 118;
+            ctx.drawImage(img, sx, sy, sideW, sideH, dx, dy, sideW * scale, sideH * scale);
+            dx += Math.floor(sideW * scale);
 
-            // Middle
+            // Middle fill tiles
+            sx = 118;
             for (let j = 0; j < paperWidth; j++) {
-                ctx.drawImage(img, sx, sy, sWidthM, sHeightM, dx, dy, sWidthM * scale, sHeightM * scale);
-                dx += Math.floor(sWidthM * scale);
+                ctx.drawImage(img, sx, sy, midW, midH, dx, dy, midW * scale, midH * scale);
+                dx += Math.floor(midW * scale);
             }
 
             // Right side
             sx = 246;
-            ctx.drawImage(img, sx, sy, sWidthS, sHeightS, dx, dy, sWidthS * scale, sHeightS * scale);
+            ctx.drawImage(img, sx, sy, sideW, sideH, dx, dy, sideW * scale, sideH * scale);
+
             dx = 0;
-            dy += Math.floor(sHeightM * scale);
+            dy += Math.floor(midH * scale);
         }
 
+        // ------------------------------
+        // Bottom row
+        // ------------------------------
         sx = 0;
         sy = 235;
 
-        // Draw left top corner
-        ctx.drawImage(img, sx, sy, sWidthC, sHeightC, dx, dy, sWidthC * scale, sHeightC * scale);
-        dx += Math.floor(sWidthC * scale);
+        // Bottom-left corner
+        ctx.drawImage(img, sx, sy, cornerW, cornerH, dx, dy, cornerW * scale, cornerH * scale);
+        dx += Math.floor(cornerW * scale);
 
-        // Draw upper line
+        // Bottom edge
         sx = 118;
         for (let i = 0; i < paperWidth; i++) {
-            ctx.drawImage(img, sx, sy, sWidthT, sHeightT, dx, dy, sWidthT * scale, sHeightT * scale);
-            dx += Math.floor(sWidthT * scale);
+            ctx.drawImage(img, sx, sy, topW, topH, dx, dy, topW * scale, topH * scale);
+            dx += Math.floor(topW * scale);
         }
 
-        // Draw right top corner
+        // Bottom-right corner
         sx = 246;
-        ctx.drawImage(img, sx, sy, sWidthC, sHeightC, dx, dy, sWidthC * scale, sHeightC * scale);
+        ctx.drawImage(img, sx, sy, cornerW, cornerH, dx, dy, cornerW * scale, cornerH * scale);
     };
-};
+}

@@ -1,42 +1,48 @@
+// Draws a ribbon/banner into a canvas appended to `parent`.
+// - `width`: number of middle segments
+// - `scale`: pixel scale multiplier (keeps pixel-art crisp)
+// - `color`: row index in the sprite (0=blue, 1=red, 2=yellow, 3=purple, ...)
 function drawBanner(parent, width, scale, color) {
+    // Canvas setup
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     parent.appendChild(canvas);
-    
-    // Content
+
+    // Sprite slice sizes (in source pixels)
     const cornerW = 98;
     const cornerH = 104;
-    
     const midW = 63;
     const midH = 92;
-    
-    let sx = 0;
-    // color = {0 = blue, 1 = red, 2 = yellow, 3 = purple....}
-    const sy = 128 * color; // 128 * n to change color
 
-    let dx = 0;
-    let dy = 0;
-
-    canvas.height = 104 * scale;
+    // Destination canvas size (in canvas pixels)
+    canvas.height = cornerH * scale;
     canvas.width = (2 * cornerW + width * midW) * scale;
 
+    // Sprite offsets
+    let sx = 0;
+    const sy = 128 * color;
+    let dx = 0;
+    const dy = 0;
+
+    // Draw once the sprite loads
     const img = new Image();
     img.src = './assets/UI Elements/UI Elements/Ribbons/BigRibbons.png';
     img.onload = () => {
         ctx.imageSmoothingEnabled = false;
-        
+
+        // Left corner
         ctx.drawImage(img, sx, sy, cornerW, cornerH, dx, dy, cornerW * scale, cornerH * scale);
         dx += Math.floor(cornerW * scale);
+
+        // Middle segments
         sx = 163;
-        
-        // Draw 6 middle sections (extract from sprite at x:200, y:yOffset)
         for (let i = 0; i < width; i++) {
             ctx.drawImage(img, sx, sy, midW, midH, dx, dy, midW * scale, midH * scale);
             dx += Math.floor(midW * scale);
         }
+
+        // Right corner
         sx = 291;
-        
-        // Draw tip (extract from sprite at x:320, y:yOffset)
         ctx.drawImage(img, sx, sy, cornerW, cornerH, dx, dy, cornerW * scale, cornerH * scale);
     };
 }
