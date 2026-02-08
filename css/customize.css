@@ -1,0 +1,194 @@
+#customize {
+    /* Customize screen container (full-screen background) */
+    display: none;
+    font-family: "Caveat Brush", cursive;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 20;
+    background-image: url('../assets/UI Elements/bg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#customize #table {
+    /* Center the whole table; note this transform creates a stacking context */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#customize #table #customizeBack {
+    /* Back button (top-left) */
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    background-image: url('../assets/UI Elements/UI Elements/Icons/Icon_08.png');
+    height: 64px;
+    width: 64px;
+    cursor: var(--cursor-pointer);
+    transition: scale 0.1s ease;
+}
+
+#customize #table #customizeBack:hover {
+    scale: 1.2;
+}
+
+#customize #table h1 {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 77px;
+    color: #efe1ab;
+    text-shadow: 4px 4px black;
+}
+
+#customize #table #confirmCustomize {
+    /* Confirm button (bottom-center) */
+    position: absolute;
+    bottom: 3%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 94px;
+    width: 172px;
+    background-image: url('../assets/UI Elements/UI Elements/Buttons/SmallGreenSquareButton_Regular2.png');
+    background-size: 100% 100%;
+    transition: transform 0.1s ease;
+    cursor: var(--cursor-pointer);
+}
+
+#customize #table #confirmCustomize:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+#customize #table #confirmCustomize h2 {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 36px;
+    color: #efe1ab;
+    text-shadow: 2px 2px black;
+}
+
+#customize #table #confirmCustomize h2.pressed {
+    top: 24%;
+}
+
+#customize #table > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#customize #table #colorsWrapper,
+#customize #table #heroWrapper {
+    /* Left/right slot columns */
+    position: absolute;
+    top: 25%;
+    right: 15%;
+    bottom: 10%;
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+}
+
+#customize #table #heroWrapper {
+    left: 15%;
+    right: auto;
+}
+
+#customize #table #colorsWrapper > div,
+#customize #table #heroWrapper > div {
+    /* Slot buttons */
+    background-image: url("../assets/UI Elements/UI Elements/Wood Table/WoodTable_Slots.png");
+    /* Use real layout sizing instead of transform so flexbox measures these as small */
+    width: 67px;  /* 168 * 0.4 */
+    height: 68px; /* 170 * 0.4 */
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    flex: 0 0 auto;
+    position: relative;
+    cursor: var(--cursor-pointer);
+    transition: scale 0.1s ease;
+}
+
+#customize #table #colorsWrapper > div.selected,
+#customize #table #heroWrapper > div.selected {
+    background-image: url("../assets/UI Elements/UI Elements/Wood Table/WoodTable_SlotsX.png");
+}
+
+#customize #table #colorsWrapper > div:hover,
+#customize #table #heroWrapper > div:hover {
+    scale: 1.2;
+}
+
+#customize #table #heroWrapper div .heroImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    pointer-events: none;
+}
+
+#customize #table div .colorImage {
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#customize #table #displayWrapper {
+    /* Paper + sprite display area */
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.12s ease;
+    z-index: 1000;
+    /* Ensure the wrapper hover hitbox is not affected by sprite overflow */
+    overflow: hidden;
+}
+
+/* When #displayWrapper is moved to <body>, this keeps it above #veil. */
+#displayWrapper.displayOverlay {
+    /* Temporary overlay state used on hover (ported to <body>) */
+    position: fixed;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.12s ease;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+#displayWrapper canvas {
+    display: block;
+}
+
+#customize #table #displayWrapper #display {
+    /* Sprite container is positioned over the paper canvas */
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Prevent the sprite element from extending hover behavior */
+    pointer-events: none;
+}
+
+/* Keep the sprite positioned correctly when #displayWrapper is portaled to <body>. */
+#displayWrapper.displayOverlay #display {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}

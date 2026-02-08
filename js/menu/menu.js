@@ -13,6 +13,8 @@
     // ==========================================================
     // Window navigation + veil
     // ==========================================================
+    const mainMenu = document.getElementById('mainMenu');
+    const customize = document.getElementById('customize');
     const veil = document.getElementById('veil');
     const aboutWindow = document.getElementById('aboutWindow');
     const settingsWindow = document.getElementById('settingsWindow');
@@ -54,6 +56,16 @@
         });
     });
 
+    // Switch to other screens.
+    function switchToGameScreen() {
+        
+    }
+
+    function switchToCustomizeScreen() {
+        mainMenu.style.display = 'none';
+        customize.style.display = 'block';
+    }
+
     // ==========================================================
     // Main menu buttons
     // ==========================================================
@@ -63,11 +75,13 @@
         btn.addEventListener('click', () => {
             playSound('click');
             btn.classList.add('pressed');
+            setTimeout(() => btn.classList.remove('pressed'), 100);
 
             // Hook for future windows.
             if (btn.id === 'startButton') {
             }
             if (btn.id === 'costumizeButton') {
+                switchToCustomizeScreen();
             }
         });
     });

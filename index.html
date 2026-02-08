@@ -5,6 +5,8 @@
     <meta description="Maze Puzzle Game">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/customize.css">
     <link rel="icon" type="image/png" href="assets/Buildings/Blue Buildings/Barracks.png">
     <title>Maze & Conquest</title>
 </head>
@@ -28,9 +30,7 @@
         <div id="settingsButton" class="sideButtons hoverResize1">
             <img src="assets/UI Elements/UI Elements/Icons/Icon_10.png" alt="about">
         </div>
-
     </div>
-
 
     <div id="aboutWindow" class="centerOffscreen">
         <h2>Credits</h2>
@@ -72,19 +72,54 @@
                 </div>
             </div>
         </div>
-
     </div>
+
     <div id="freeMusic">
         <div id="musicImageHolder" class="hoverResize2"></div>
+    </div>
+</div>
+<div id="customize">
+    <div id="table">
+        <div id="customizeBack"></div>
+        <h1>Customize</h1>
+        <div id="heroWrapper">
+            <div id="archer" class="heroSlot"></div>
+            <div id="lancer" class="heroSlot"></div>
+            <div id="monk" class="heroSlot"></div>
+            <div id="pawn" class="heroSlot"></div>
+            <div id="warrior" class="heroSlot"></div>
+        </div>
+        <div id="colorsWrapper">
+            <div id="blue" class="colorSlots"></div>
+            <div id="red" class="colorSlots"></div>
+            <div id="yellow" class="colorSlots"></div>
+            <div id="purple" class="colorSlots"></div>
+            <div id="black" class="colorSlots"></div>
+        </div>
+        <div id="displayWrapper">
+            <div id="display"></div>
+        </div>
+        <div id="confirmCustomize">
+            <h2>Confirm</h2>
+        </div>
     </div>
 </div>
 
 <div id="veil"></div>
 </body>
+
+<!-- Menu imports -->
 <script src="js/menu/drawBanner.js"></script>
 <script src="js/menu/drawPaper.js"></script>
 <script src="js/menu/drawSliderBorder.js"></script>
 <script src="js/menu/drawSliderLine.js"></script>
 <script src="js/menu/playSound.js"></script>
 <script src="js/menu/menu.js"></script>
+
+<!-- Customize imports-->
+<script src="js/customize/drawTable.js"></script>
+<script src="js/customize/drawColor.js"></script>
+<script src="js/customize/drawRegularPaper.js"></script>
+<script src="js/customize/animateSprite.js"></script>
+<script src="js/customize/customize.js"></script>
 </html>
