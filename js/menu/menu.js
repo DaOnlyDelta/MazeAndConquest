@@ -64,6 +64,8 @@
     function switchToCustomizeScreen() {
         mainMenu.style.display = 'none';
         customize.style.display = 'block';
+
+        window.loadCustomizeSelection();
     }
 
     // ==========================================================

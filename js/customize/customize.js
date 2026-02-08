@@ -17,15 +17,21 @@
     drawTable(table, 8, 6);
 
     const customizeBack = document.getElementById('customizeBack');
-    customizeBack.addEventListener('click', () => backToMenu());
+    customizeBack.addEventListener('click', () => {
+        playSound('click2');
+        backToMenu();
+    });
 
     const confirm = document.getElementById('confirmCustomize');
+    confirm.addEventListener('pointerenter', () => playSound('hover'));
     confirm.addEventListener('click', () => {
-        backToMenu();
+        playSound('click');
 
         // Expose selection for future gameplay screen.
         window.selectedHero = getSelectedHero();
         window.selectedColor = getSelectedColor();
+        
+        backToMenu();
     });
 
     function backToMenu() {
@@ -38,8 +44,14 @@
     // ==========================================================
     // Note: different idles can have different frame counts.
     // The animator derives frameCount at runtime via: image.naturalWidth / frameWidth.
-    const UNIT_HEROES = ['Warrior', 'Lancer', 'Archer', 'Monk', 'Pawn'];
+    // IMPORTANT: order must match the DOM order of .heroSlot/.colorSlots in index.html.
+    // heroSlots: Archer, Lancer, Monk, Pawn, Warrior
+    // colorSlots: Blue, Red, Yellow, Purple, Black
+    const UNIT_HEROES = ['Warrior', 'Lancer', 'Monk', 'Pawn', 'Archer'];
     const UNIT_COLORS = ['Blue', 'Red', 'Yellow', 'Purple', 'Black'];
+
+    window.selectedHero = UNIT_HEROES[0];
+    window.selectedColor = UNIT_COLORS[0];
 
     const UNIT_IDLE_FRAME_WIDTH_DEFAULT = 192;
     const UNIT_IDLE_FRAME_WIDTH_LANCER = 320;
@@ -100,6 +112,7 @@
     let heroImages = Array();
     let displayCtrl = null;
     heroSlots.forEach((parent, idx) => {
+        parent.addEventListener('pointerenter', () => playSound('hover'));
         const heroImage = document.createElement('div');
         heroImage.classList.add('heroImage');
         if (idx === 0) parent.classList.add('selected');
@@ -118,6 +131,8 @@
 
     const colorSlots = Array.from(document.getElementsByClassName('colorSlots'));
     colorSlots.forEach((parent, idx) => {
+        parent.addEventListener('pointerenter', () => playSound('hover'));
+
         const colorImage = document.createElement('div');
         colorImage.classList.add('colorImage');
         if (idx === 0) parent.classList.add('selected');
@@ -217,6 +232,35 @@
         const idx = slotEls.findIndex((node) => node.classList.contains('selected'));
         return idx >= 0 ? idx : 0;
     }
+
+    // ==========================================================
+    // Load persisted selection (read-only)
+    // ==========================================================
+    // The menu calls this every time the user opens Customize.
+    // It reads from window.selectedHero / window.selectedColor but DOES NOT write to them.
+    function loadCustomizeSelection() {
+        const desiredHero = window.selectedHero;
+        const desiredColor = window.selectedColor;
+
+        const heroIdx = typeof desiredHero === 'string' ? UNIT_HEROES.indexOf(desiredHero) : -1;
+        const colorIdx = typeof desiredColor === 'string' ? UNIT_COLORS.indexOf(desiredColor) : -1;
+
+        if (heroIdx >= 0) {
+            heroSlots.forEach((s) => s.classList.remove('selected'));
+            if (heroSlots[heroIdx]) heroSlots[heroIdx].classList.add('selected');
+        }
+
+        if (colorIdx >= 0) {
+            colorSlots.forEach((s) => s.classList.remove('selected'));
+            if (colorSlots[colorIdx]) colorSlots[colorIdx].classList.add('selected');
+            updateHeroImages(colorIdx);
+        }
+
+        updateDisplay();
+    }
+
+    // Exposed for menu.js
+    window.loadCustomizeSelection = loadCustomizeSelection;
 
     // ==========================================================
     // Display: animate selected unit idle

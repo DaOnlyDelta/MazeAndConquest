@@ -73,9 +73,14 @@ let sfxEnabled = true;
 	window.playSound = function (effect) {
 		// Avoid autoplay-policy errors on hover before the first user interaction.
 		if ((!audioUnlocked && effect === 'hover') || !sfxEnabled) return;
-
+		
 		const audio = sfxByKey[effect] || new Audio(effect);
-		audio.volume = sfxVolume;
+		
+		if (effect === 'hover') {
+			audio.volume = sfxVolume * 5;
+		} else {
+			audio.volume = sfxVolume;
+		}
 		audio.currentTime = 0;
 		safePlay(audio);
 	};
