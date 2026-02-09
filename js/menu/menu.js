@@ -15,6 +15,7 @@
     // ==========================================================
     const mainMenu = document.getElementById('mainMenu');
     const customize = document.getElementById('customize');
+    const levelSelect = document.getElementById('levelSelect');
     const veil = document.getElementById('veil');
     const aboutWindow = document.getElementById('aboutWindow');
     const settingsWindow = document.getElementById('settingsWindow');
@@ -57,8 +58,9 @@
     });
 
     // Switch to other screens.
-    function switchToGameScreen() {
-        
+    function switchToLevelSelect() {
+        mainMenu.style.display = 'none';
+        levelSelect.style.display = 'block';
     }
 
     function switchToCustomizeScreen() {
@@ -81,6 +83,7 @@
 
             // Hook for future windows.
             if (btn.id === 'startButton') {
+                switchToLevelSelect();
             }
             if (btn.id === 'costumizeButton') {
                 switchToCustomizeScreen();
