@@ -27,3 +27,46 @@
     color: #efe1ab;
     text-shadow: 4px 4px black;
 }
+
+#levelSelect #tableSelect #levelSelectBack {
+    /* Back button (top-left) */
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: var(--cursor-pointer);
+    transition: scale 0.1s ease;
+}
+
+#levelSelect #tableSelect #levelWrapper {
+    position: absolute;
+    top: 27%;
+    bottom: 22%;
+    left: 7%;
+    right: 8%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 35px;
+}
+
+#levelSelect #tableSelect #levelWrapper div {
+    background-color: gray;
+    cursor: var(--cursor-pointer);
+    transition: scale 0.1s ease;
+}
+
+#levelSelect #tableSelect #levelWrapper div:hover {
+    scale: 1.1;
+}
+
+#levelSelect #tableSelect #levelSelectBack h3 {
+    font-size: 40px;
+    color: #efe1ab;
+    text-shadow: 2px 2px black;
+}
+
+#levelSelect #tableSelect #levelSelectBack h3:hover {
+    scale: 1.2;
+    text-decoration: underline;
+}

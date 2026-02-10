@@ -10,7 +10,7 @@
     // Screen elements + navigation
     // ==========================================================
     const customize = document.getElementById('customize');
-    const mainManu = document.getElementById('mainMenu');
+    const mainMenu = document.getElementById('mainMenu');
     const table = document.getElementById('table');
 
     // Table background
@@ -36,7 +36,7 @@
 
     function backToMenu() {
         customize.style.display = 'none';
-        mainManu.style.display = 'block';
+        mainMenu.style.display = 'block';
     }
 
     // ==========================================================
@@ -45,9 +45,9 @@
     // Note: different idles can have different frame counts.
     // The animator derives frameCount at runtime via: image.naturalWidth / frameWidth.
     // IMPORTANT: order must match the DOM order of .heroSlot/.colorSlots in index.html.
-    // heroSlots: Archer, Lancer, Monk, Pawn, Warrior
+    // heroSlots: Warrior, Lancer, Archer, Monk, Pawn
     // colorSlots: Blue, Red, Yellow, Purple, Black
-    const UNIT_HEROES = ['Warrior', 'Lancer', 'Monk', 'Pawn', 'Archer'];
+    const UNIT_HEROES = ['Warrior', 'Lancer', 'Archer', 'Monk', 'Pawn'];
     const UNIT_COLORS = ['Blue', 'Red', 'Yellow', 'Purple', 'Black'];
 
     window.selectedHero = UNIT_HEROES[0];
