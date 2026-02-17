@@ -34,6 +34,7 @@
     const rocks = [new Image(), new Image(), new Image(), new Image()]; // Rock types 1-4
     const bushes = [new Image(), new Image(), new Image(), new Image()]; // Bush types 1-4
     const staticRocks = [new Image(), new Image(), new Image(), new Image()]; // Static rock types 1-4
+    const buildings = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image()]; // Building types 1-8
 
     // Animation state for water foam
     let foamAnimationFrame = 0;
@@ -134,6 +135,22 @@
         const dy = y * displayS;
         
         ctx.drawImage(img, sx, sy, bushFrameWidth, bushFrameHeight, dx, dy, bushFrameWidth, bushFrameHeight);
+    }
+
+    function drawBuilding(i, x, y, flip = false) {
+        const img = buildings[i];
+        const dx = x * displayS;
+        const dy = y * displayS;
+        
+        if (flip) {
+            ctx.save();
+            ctx.translate(dx + displayS / 2, dy + displayS / 2);
+            ctx.scale(-1, 1);
+            ctx.drawImage(img, 0, 0, img.width, img.height, -displayS / 2, -displayS / 2, img.width, img.height);
+            ctx.restore();
+        } else {
+            ctx.drawImage(img, 0, 0, img.width, img.height, dx, dy - (img.height - displayS), img.width, img.height);
+        }
     }
 
     function drawScene() {
@@ -640,6 +657,12 @@
             ]);
         }
 
+        // Flat ground buildings
+        {
+            drawBuilding(4, 16.4, 14.3);
+            drawBuilding(7, 10, 18);
+        }
+
         // Flat ground rocks
         {
             drawStaticRock(0, 19.1, 17.9);
@@ -656,7 +679,7 @@
             drawBush(1, 13.9, 13);
             drawBush(0, 13.4, 13.3);
             drawBush(1, 17.1, 13.7);
-            drawBush(3, 15.1, 14);
+            drawBush(3, 15.4, 13.8);
             drawBush(0, 1.1, 14.1);
             drawBush(2, 1.65, 14.5);
             drawBush(1, 0.65, 14.5);
@@ -763,7 +786,7 @@
     // Callback to check if all images are loaded
     function checkImagesLoaded() {
         imagesLoaded++;
-        if (imagesLoaded !== 19) return; // Wait for all 19 images (7 base + 4 rock types + 4 bush types + 4 static rock types)
+        if (imagesLoaded !== 27) return; // Wait for all 27 images (7 base + 4 rock types + 4 bush types + 4 static rock types + 8 buildings)
         
         // All images loaded, start unified animation loop
         animate();
@@ -856,4 +879,29 @@
 
     staticRocks[3].src = './assets/Terrain/Decorations/Rocks/Rock4.png';
     staticRocks[3].onload = checkImagesLoaded;
+
+    // Load building sprites (type 1-8)
+    buildings[0].src = './assets/Buildings/Blue Buildings/Archery.png';
+    buildings[0].onload = checkImagesLoaded;
+
+    buildings[1].src = './assets/Buildings/Blue Buildings/Barracks.png';
+    buildings[1].onload = checkImagesLoaded;
+
+    buildings[2].src = './assets/Buildings/Blue Buildings/Castle.png';
+    buildings[2].onload = checkImagesLoaded;
+
+    buildings[3].src = './assets/Buildings/Blue Buildings/House1.png';
+    buildings[3].onload = checkImagesLoaded;
+
+    buildings[4].src = './assets/Buildings/Blue Buildings/House2.png';
+    buildings[4].onload = checkImagesLoaded;
+
+    buildings[5].src = './assets/Buildings/Blue Buildings/House3.png';
+    buildings[5].onload = checkImagesLoaded;
+
+    buildings[6].src = './assets/Buildings/Blue Buildings/Monastery.png';
+    buildings[6].onload = checkImagesLoaded;
+
+    buildings[7].src = './assets/Buildings/Blue Buildings/Tower.png';
+    buildings[7].onload = checkImagesLoaded;
 })();
