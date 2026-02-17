@@ -74,6 +74,8 @@ function transition(onMidTransition, doubleDuration = false) {
         }, true);
     }
 
+    switchToLevel();
+
     function switchToCustomizeScreen() {
         transition(() => {
             mainMenu.style.display = 'none';
