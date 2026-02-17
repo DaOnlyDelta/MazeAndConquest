@@ -694,7 +694,14 @@
 
         // Flat ground trees
         {
-            
+            drawTree(2, 1, 5.9);
+            drawTree(2, 0, 7.3);
+            drawTree(3, 0.55, 7.5);
+            drawTree(2, 19.6, 15.7);
+            drawTree(2, 18.9, 16.7);
+            drawTree(3, 19.9, 17);
+            drawTree(3, 21.57, 17.35);
+            drawTree(2, 21, 17.9);
         }
 
         // Flat ground buildings
@@ -753,12 +760,6 @@
             drawBuilding(5, 21.15, 10);
             drawBuilding(4, 21.4, 9.7, true);
             drawBuilding(7, 2, 13);
-        }
-
-        // Elevated ground bushes
-        {
-            drawBush(1, 4.6, 9.3);
-            drawBush(3, 20.4, 11.5);
         }
 
         // Elevated ground 2
@@ -836,6 +837,20 @@
                 { sx: 6, sy: 0 },
                 { sx: 7, sy: 0 }
             ]);
+        }
+
+        // Elevated  Trees
+        {
+            drawTree(3, 6.8, 5.);
+            drawTree(3, 3.8, 10.6);
+            drawTree(2, 3.3, 11);
+            drawTree(2, 1.5, 9.9);
+        }
+
+        // Elevated ground bushes
+        {
+            drawBush(1, 4.6, 9.3);
+            drawBush(3, 20.4, 11.5);
         }
 
         // Elevated ground building
