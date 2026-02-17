@@ -35,6 +35,8 @@
     const bushes = [new Image(), new Image(), new Image(), new Image()]; // Bush types 1-4
     const staticRocks = [new Image(), new Image(), new Image(), new Image()]; // Static rock types 1-4
     const buildings = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image()]; // Building types 1-8
+    const trees = [new Image(), new Image(), new Image(), new Image()]; // Tree types 1-4
+    const stumps = [new Image(), new Image(), new Image(), new Image()]; // Stump types 1-4
 
     // Animation state for water foam
     let foamAnimationFrame = 0;
@@ -59,6 +61,14 @@
     const bushFrameWidth = 128; // Each bush frame is 128x128
     const bushFrameHeight = 128;
     const bushTotalFrames = 8; // 1024 / 128 = 8 frames
+
+    // Animation state for trees
+    let treeAnimationFrame = 0;
+    const TREE_ANIMATION_SPEED = 15;
+    let treeFrameCounter = 0;
+    const treeFrameWidth = 192; // Each tree frame is 192x256
+    const treeFrameHeight = 256;
+    const treeTotalFrames = 8; // 1536 / 192 = 8 frames
 
     // Draw animated water foam on a specific row
     function drawWaterFoam(img, y, xPositions) {
@@ -151,6 +161,17 @@
         } else {
             ctx.drawImage(img, 0, 0, img.width, img.height, dx, dy - (img.height - displayS), img.width, img.height);
         }
+    }
+
+    function drawTree(i, x, y) {
+        const img = trees[i];
+        const currentFrame = treeAnimationFrame % treeTotalFrames;
+        const sx = currentFrame * treeFrameWidth;
+        const sy = 0;
+        const dx = x * displayS;
+        const dy = y * displayS;
+
+        ctx.drawImage(img, sx, sy, treeFrameWidth, treeFrameHeight, dx, dy - (treeFrameHeight - displayS), treeFrameWidth, treeFrameHeight);
     }
 
     function drawScene() {
@@ -445,6 +466,20 @@
             drawShadow(shadow, 6, [ 13, 14 ]);
         }
 
+        // Flat ground 2 trees
+        {
+            drawTree(0, 13.9, 3.4);
+            drawTree(1, 21.5, 4);
+            drawTree(0, 15.5, 4);
+            drawTree(0, 18.4, 4.5);
+            drawTree(1, 14.6, 4.5);
+            drawTree(1, 10.6, 5.3);
+            drawTree(0, 21.7, 7);
+            drawTree(0, 19.8, 7.6);
+            drawTree(0, 17.4, 7.6);
+            drawTree(1, 19, 8.6);
+        }
+
         // Elevated ground (cliffs and slopes), sx += 5 for rocks
         {
             // Y=17
@@ -657,6 +692,11 @@
             ]);
         }
 
+        // Flat ground trees
+        {
+            
+        }
+
         // Flat ground buildings
         {
             drawBuilding(4, 16.4, 14.3);
@@ -793,7 +833,7 @@
     // Callback to check if all images are loaded
     function checkImagesLoaded() {
         imagesLoaded++;
-        if (imagesLoaded !== 27) return; // Wait for all 27 images (7 base + 4 rock types + 4 bush types + 4 static rock types + 8 buildings)
+        if (imagesLoaded !== 35) return; // Wait for all 35 images (7 base + 4 rock types + 4 bush types + 4 static rock types + 8 buildings + 4 trees + 4 stump types)
         
         // All images loaded, start unified animation loop
         animate();
@@ -822,6 +862,13 @@
             bushAnimationFrame = (bushAnimationFrame + 1) % bushTotalFrames;
         }
 
+        // Update tree animation
+        treeFrameCounter++;
+        if (treeFrameCounter >= TREE_ANIMATION_SPEED) {
+            treeFrameCounter = 0;
+            treeAnimationFrame = (treeAnimationFrame + 1) % treeTotalFrames;
+        }
+
         // Draw once per frame with all animations updated
         drawScene();
         requestAnimationFrame(animate);
@@ -829,86 +876,84 @@
 
     waterImg.src = './assets/Terrain/Tileset/Water Background color.png';
     waterImg.onload = checkImagesLoaded;
-
     g5.src = './assets/Terrain/Tileset/Tilemap_color5.png';
     g5.onload = checkImagesLoaded;
-
     g3.src = './assets/Terrain/Tileset/Tilemap_color3.png';
     g3.onload = checkImagesLoaded;
-
     g2.src = './assets/Terrain/Tileset/Tilemap_color2.png';
     g2.onload = checkImagesLoaded;
-
     g1.src = './assets/Terrain/Tileset/Tilemap_color1.png';
     g1.onload = checkImagesLoaded;
-
     foamImg.src = './assets/Terrain/Tileset/Water Foam.png';
     foamImg.onload = checkImagesLoaded;
-
     shadow.src = './assets/Terrain/Tileset/Shadow.png';
     shadow.onload = checkImagesLoaded;
 
     // Load rock sprites (types 1-4)
     rocks[0].src = './assets/Terrain/Decorations/Rocks in the Water/Water Rocks_01.png';
     rocks[0].onload = checkImagesLoaded;
-
     rocks[1].src = './assets/Terrain/Decorations/Rocks in the Water/Water Rocks_02.png';
     rocks[1].onload = checkImagesLoaded;
-
     rocks[2].src = './assets/Terrain/Decorations/Rocks in the Water/Water Rocks_03.png';
     rocks[2].onload = checkImagesLoaded;
-
     rocks[3].src = './assets/Terrain/Decorations/Rocks in the Water/Water Rocks_04.png';
     rocks[3].onload = checkImagesLoaded;
 
     // Load bush sprites (types 1-4)
     bushes[0].src = './assets/Terrain/Decorations/Bushes/Bushe1.png';
     bushes[0].onload = checkImagesLoaded;
-
     bushes[1].src = './assets/Terrain/Decorations/Bushes/Bushe2.png';
     bushes[1].onload = checkImagesLoaded;
-
     bushes[2].src = './assets/Terrain/Decorations/Bushes/Bushe3.png';
     bushes[2].onload = checkImagesLoaded;
-
     bushes[3].src = './assets/Terrain/Decorations/Bushes/Bushe4.png';
     bushes[3].onload = checkImagesLoaded;
 
     // Load staticRock sprites (types 1-4)
     staticRocks[0].src = './assets/Terrain/Decorations/Rocks/Rock1.png';
     staticRocks[0].onload = checkImagesLoaded;
-
     staticRocks[1].src = './assets/Terrain/Decorations/Rocks/Rock2.png';
     staticRocks[1].onload = checkImagesLoaded;
-
     staticRocks[2].src = './assets/Terrain/Decorations/Rocks/Rock3.png';
     staticRocks[2].onload = checkImagesLoaded;
-
     staticRocks[3].src = './assets/Terrain/Decorations/Rocks/Rock4.png';
     staticRocks[3].onload = checkImagesLoaded;
 
     // Load building sprites (type 1-8)
     buildings[0].src = './assets/Buildings/Blue Buildings/Archery.png';
     buildings[0].onload = checkImagesLoaded;
-
     buildings[1].src = './assets/Buildings/Blue Buildings/Barracks.png';
     buildings[1].onload = checkImagesLoaded;
-
     buildings[2].src = './assets/Buildings/Blue Buildings/Castle.png';
     buildings[2].onload = checkImagesLoaded;
-
     buildings[3].src = './assets/Buildings/Blue Buildings/House1.png';
     buildings[3].onload = checkImagesLoaded;
-
     buildings[4].src = './assets/Buildings/Blue Buildings/House2.png';
     buildings[4].onload = checkImagesLoaded;
-
     buildings[5].src = './assets/Buildings/Blue Buildings/House3.png';
     buildings[5].onload = checkImagesLoaded;
-
     buildings[6].src = './assets/Buildings/Blue Buildings/Monastery.png';
     buildings[6].onload = checkImagesLoaded;
-
     buildings[7].src = './assets/Buildings/Blue Buildings/Tower.png';
     buildings[7].onload = checkImagesLoaded;
+
+    // Load tree sprites (types 1-4)
+    trees[0].src = './assets/Terrain/Resources/Wood/Trees/Tree1.png';
+    trees[0].onload = checkImagesLoaded;
+    trees[1].src = './assets/Terrain/Resources/Wood/Trees/Tree2.png';
+    trees[1].onload = checkImagesLoaded;
+    trees[2].src = './assets/Terrain/Resources/Wood/Trees/Tree3.png';
+    trees[2].onload = checkImagesLoaded;
+    trees[3].src = './assets/Terrain/Resources/Wood/Trees/Tree4.png';
+    trees[3].onload = checkImagesLoaded;
+
+    // Load stump sprites (types 1-4)
+    stumps[0].src = './assets/Terrain/Resources/Wood/Trees/Stump 1.png';
+    stumps[0].onload = checkImagesLoaded;
+    stumps[1].src = './assets/Terrain/Resources/Wood/Trees/Stump 2.png';
+    stumps[1].onload = checkImagesLoaded;
+    stumps[2].src = './assets/Terrain/Resources/Wood/Trees/Stump 3.png';
+    stumps[2].onload = checkImagesLoaded;
+    stumps[3].src = './assets/Terrain/Resources/Wood/Trees/Stump 4.png';
+    stumps[3].onload = checkImagesLoaded;
 })();
