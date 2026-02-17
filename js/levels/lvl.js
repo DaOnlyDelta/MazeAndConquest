@@ -665,7 +665,14 @@
 
         // Flat ground rocks
         {
-            drawStaticRock(0, 19.1, 17.9);
+            drawStaticRock(1, 1, 6.5);
+            drawStaticRock(2, 3.1, 8.5);
+            drawStaticRock(2, 14.75, 11.5);
+            drawStaticRock(0, 8.3, 11.7);
+            drawStaticRock(3, 8.8, 11.5,);
+            drawStaticRock(3, 4.3, 14.5, true);
+            drawStaticRock(3, 19.2, 17.5, true);
+            drawStaticRock(0, 19.02, 17.8);
         }
 
         // Flat ground 2 rocks
@@ -905,4 +912,3 @@
     buildings[7].src = './assets/Buildings/Blue Buildings/Tower.png';
     buildings[7].onload = checkImagesLoaded;
 })();
->>>>>>> 7c4a814 (new branch)
