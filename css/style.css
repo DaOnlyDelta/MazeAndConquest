@@ -35,16 +35,28 @@ a {
     position: absolute;
     left: 0;
     top: 0;
-    opacity: 0;
+    opacity: 1; /* Start with the veil fully visible to hide loading */
+    background-color: rgba(0, 0, 0, 1);
     width: 100%;
     height: 100%;
     pointer-events: none;
-    background-color: rgba(0, 0, 0, 0.6);
     transition: opacity 0.4s ease;
+    z-index: 9999999;
+}
+
+#veil.ready {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 999;
 }
 
 #veil.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#veil.transition {
+    background-color: rgba(0, 0, 0, 1);
     opacity: 1;
     pointer-events: all;
 }

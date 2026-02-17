@@ -1,0 +1,27 @@
+#level {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: auto min(120vh, 96vw) auto;
+    grid-template-rows: 1fr;
+    padding: 2vh;
+}
+
+#level #canvasHolder {
+    width: min(120vh, 96vw);
+    aspect-ratio: 25 / 20;
+    height: auto;
+    justify-self: center;
+    align-self: center;
+}
+
+#level #canvasHolder canvas {
+    display: block;
+    height: 100%;
+    width: 100%;
+    border: 5px solid var(--primary-text-color);
+    border-radius: 5px;
+}

@@ -1,3 +1,12 @@
+function transition(onMidTransition, doubleDuration = false) {
+    veil.classList.add('transition');
+    const duration = doubleDuration ? 1600 : 800;
+    setTimeout(() => {
+        onMidTransition();
+        veil.classList.remove('transition');
+    }, duration);
+}
+
 (function () {
     // ==========================================================
     // Title / decorations
@@ -15,7 +24,7 @@
     // ==========================================================
     const mainMenu = document.getElementById('mainMenu');
     const customize = document.getElementById('customize');
-    const levelSelect = document.getElementById('levelSelect');
+    const level = document.getElementById('level');
     const veil = document.getElementById('veil');
     const aboutWindow = document.getElementById('aboutWindow');
     const settingsWindow = document.getElementById('settingsWindow');
@@ -58,15 +67,18 @@
     });
 
     // Switch to other screens.
-    function switchToLevelSelect() {
-        mainMenu.style.display = 'none';
-        levelSelect.style.display = 'block';
+    function switchToLevel() {
+        transition(() => {
+            mainMenu.style.display = 'none';
+            level.style.display = 'grid';
+        }, true);
     }
 
     function switchToCustomizeScreen() {
-        mainMenu.style.display = 'none';
-        customize.style.display = 'block';
-
+        transition(() => {
+            mainMenu.style.display = 'none';
+            customize.style.display = 'block';
+        });
         window.loadCustomizeSelection();
     }
 
@@ -79,11 +91,10 @@
         btn.addEventListener('click', () => {
             playSound('click');
             btn.classList.add('pressed');
-            setTimeout(() => btn.classList.remove('pressed'), 100);
+            setTimeout(() => btn.classList.remove('pressed'), 800);
 
-            // Hook for future windows.
             if (btn.id === 'startButton') {
-                switchToLevelSelect();
+                switchToLevel();
             }
             if (btn.id === 'costumizeButton') {
                 switchToCustomizeScreen();
@@ -253,4 +264,9 @@
         // From 0.0 (left) to 0.1 (right)
         window.setSfxVolume(t * 0.1);
     });
+
+    // After loading, show the veil
+    setTimeout(() => {
+        veil.classList.add('ready');
+    }, 300);
 })();

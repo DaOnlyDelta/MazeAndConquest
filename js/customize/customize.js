@@ -35,8 +35,10 @@
     });
 
     function backToMenu() {
-        customize.style.display = 'none';
-        mainMenu.style.display = 'block';
+        transition(() => {
+            customize.style.display = 'none';
+            mainMenu.style.display = 'block';
+        });
     }
 
     // ==========================================================
