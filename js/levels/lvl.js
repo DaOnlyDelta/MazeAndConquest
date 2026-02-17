@@ -104,6 +104,22 @@
         ctx.drawImage(img, sx, sy, rockFrameWidth, rockFrameHeight, dx, dy, displayS, displayS);
     }
 
+    function drawStaticRock(i, x, y, flip = false) {
+        const img = staticRocks[i];
+        const dx = x * displayS;
+        const dy = y * displayS;
+        
+        if (flip) {
+            ctx.save();
+            ctx.translate(dx + displayS / 2, dy + displayS / 2);
+            ctx.scale(-1, 1);
+            ctx.drawImage(img, 0, 0, rockFrameWidth, rockFrameHeight, -displayS / 2, -displayS / 2, displayS, displayS);
+            ctx.restore();
+        } else {
+            ctx.drawImage(img, 0, 0, rockFrameWidth, rockFrameHeight, dx, dy, displayS, displayS);
+        }
+    }
+
     // Draw animated bush decorations (128x128, 8 frames, 1024x128 sprite)
     function drawBush(i, x, y) {
         const img = bushes[i];
@@ -289,13 +305,6 @@
                 { sx: 1, sy: 0 },
                 { sx: 1, sy: 0 }
             ]);
-        }
-
-        // Flat ground bushes
-        {
-            drawBush(1, 3.1, 17.25);
-            drawBush(0, 2.5, 17.5);
-            drawBush(3, 3.5, 17.5);
         }
 
         // Flat ground shadow
@@ -631,6 +640,33 @@
             ]);
         }
 
+        // Flat ground rocks
+        {
+            drawStaticRock(0, 19.1, 17.9);
+        }
+
+        // Flat ground 2 rocks
+        {
+            drawStaticRock(1, 15.1, 7.4, true);
+        }
+
+        // Flat ground bushes
+        {
+            drawBush(3, 0.5, 12.7);
+            drawBush(1, 13.9, 13);
+            drawBush(0, 13.4, 13.3);
+            drawBush(1, 17.1, 13.7);
+            drawBush(3, 15.1, 14);
+            drawBush(0, 1.1, 14.1);
+            drawBush(2, 1.65, 14.5);
+            drawBush(1, 0.65, 14.5);
+            drawBush(0, 22.2, 16.4);
+            drawBush(1, 21.7, 16.7);
+            drawBush(1, 3.1, 17.25);
+            drawBush(0, 2.5, 17.5);
+            drawBush(3, 3.5, 17.5);
+        }
+
         // Elevated ground shadow
         {
             drawShadow(shadow, 8, [ 3, 4, 5, 6, 7, 8 ]);
@@ -638,6 +674,12 @@
             drawShadow(shadow, 6, [ 2, 8, 9, 10 ]);
             drawShadow(shadow, 5, [ 2, 10 ]);
             drawShadow(shadow, 4, [ 2 ]);
+        }
+
+        // Elevated ground bushes
+        {
+            drawBush(1, 4.6, 9.3);
+            drawBush(3, 20.2, 11.5);
         }
 
         // Elevated ground 2
