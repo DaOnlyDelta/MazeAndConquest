@@ -706,10 +706,19 @@
             drawShadow(shadow, 4, [ 2 ]);
         }
 
+        // Elevated ground buildings
+        {
+            drawBuilding(3, 17, 9.65);
+            drawBuilding(3, 18.9, 10.9);
+            drawBuilding(5, 21.15, 10);
+            drawBuilding(4, 21.4, 9.7, true);
+            drawBuilding(7, 2, 13);
+        }
+
         // Elevated ground bushes
         {
             drawBush(1, 4.6, 9.3);
-            drawBush(3, 20.2, 11.5);
+            drawBush(3, 20.4, 11.5);
         }
 
         // Elevated ground 2
@@ -787,6 +796,11 @@
                 { sx: 6, sy: 0 },
                 { sx: 7, sy: 0 }
             ]);
+        }
+
+        // Elevated ground building
+        {
+            drawBuilding(2, 3, 5);
         }
     }
 
