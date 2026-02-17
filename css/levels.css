@@ -8,6 +8,7 @@
     grid-template-columns: auto min(120vh, 96vw) auto;
     grid-template-rows: 1fr;
     padding: 2vh;
+    background-color: black;
 }
 
 #level #canvasHolder {
