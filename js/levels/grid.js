@@ -1,6 +1,6 @@
 (function() {
     // Grid layout
-    // 1 = Grass layer 1
+    // 1 = Grass layer
     // 2 = Left slope
     // 3 = Right slope
     // 0 = Empty (used for out-of-bounds)
@@ -93,9 +93,42 @@
             if (toX < 0 || toX >= 25 || toY < 0 || toY >= 19) return false;
             const val = this.layers[currentLayer][toY][toX];
             if (val === 0) return false;
-            // Slopes only passable horizontally
-            if ((val === 2 || val === 3) && fromY !== toY) return false;
+            if (val === 2 || val === 3) return false; // slopes handled via getSlopeTransition
             return true;
+        },
+
+        /**
+         * Checks if moving in a direction from (fromX, fromY) would step onto a slope.
+         * If so, changes the current layer and returns { slopeX, slopeY, diagDirection }
+         * so the caller can snap the player to the slope tile and start a diagonal animation.
+         * Returns null if no slope is found in that direction.
+         */
+        getSlopeTransition(fromX, fromY, direction) {
+            let slopeX = fromX, slopeY = fromY;
+            if (direction === 'left')  slopeX--;
+            if (direction === 'right') slopeX++;
+            if (direction === 'up')    slopeY--;
+            if (direction === 'down')  slopeY++;
+            if (slopeX < 0 || slopeX >= 25 || slopeY < 0 || slopeY >= 19) return null;
+            const val = this.layers[currentLayer][slopeY][slopeX];
+            if (val === 2) {
+                if (direction === 'left') {
+                    currentLayer = Math.min(currentLayer + 1, this.layers.length - 1);
+                    return { slopeX, slopeY, diagDirection: 'upleft' };
+                } else if (direction === 'right') {
+                    currentLayer = Math.max(currentLayer - 1, 0);
+                    return { slopeX, slopeY, diagDirection: 'downright' };
+                }
+            } else if (val === 3) {
+                if (direction === 'right') {
+                    currentLayer = Math.min(currentLayer + 1, this.layers.length - 1);
+                    return { slopeX, slopeY, diagDirection: 'upright' };
+                } else if (direction === 'left') {
+                    currentLayer = Math.max(currentLayer - 1, 0);
+                    return { slopeX, slopeY, diagDirection: 'downleft' };
+                }
+            }
+            return null;
         },
 
         /**

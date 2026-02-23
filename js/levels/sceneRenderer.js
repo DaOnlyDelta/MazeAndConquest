@@ -15,6 +15,9 @@
         // Clear canvas
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
+        // Sprite depth queue — all sprites are pushed here and drawn in Y order at the end
+        const sprites = [];
+
         // Base water layer
         for (let row = 0; row < TILES_Y; row++) {
             for (let col = 0; col < TILES_X; col++) {
@@ -305,7 +308,7 @@
         }
 
         // ==========================================================
-        // Forest Area (Middle-right grassland)
+        // Forest Area
         // ==========================================================
         {
             // Y=2
@@ -498,20 +501,15 @@
         // Forest Trees
         // ==========================================================
         {
-            drawTree(0, 13.9, 2.4);
-            drawTree(0, 15.5, 3);
-            drawTree(1, 21.5, 3);
-            drawTree(0, 18.4, 3.5);
-            drawTree(1, 14.6, 3.5);
-            drawTree(1, 10.6, 4.3);
-            drawTree(0, 21.7, 6);
-            drawTree(0, 19.8, 6.6);
-            drawTree(1, 19, 7.6);
-        }
-
-        // Draw player behind elevated ground when on ground layer
-        if (window.grid.getCurrentLayer() === 0) {
-            drawPlayer(window.player.flipped());
+            sprites.push({ y: 2.4,  draw: () => drawTree(0, 13.9, 2.4) });
+            sprites.push({ y: 3,    draw: () => drawTree(0, 15.5, 3) });
+            sprites.push({ y: 3,    draw: () => drawTree(1, 21.5, 3) });
+            sprites.push({ y: 3.5,  draw: () => drawTree(0, 18.4, 3.5) });
+            sprites.push({ y: 3.5,  draw: () => drawTree(1, 14.6, 3.5) });
+            sprites.push({ y: 4.3,  draw: () => drawTree(1, 10.6, 4.3) });
+            sprites.push({ y: 6,    draw: () => drawTree(0, 21.7, 6) });
+            sprites.push({ y: 6.6,  draw: () => drawTree(0, 19.8, 6.6) });
+            sprites.push({ y: 7.6,  draw: () => drawTree(1, 19, 7.6) });
         }
 
         // ==========================================================
@@ -923,60 +921,60 @@
         // Flat Ground Trees
         // ==========================================================
         {
-            drawTree(2, 1, 4.9);
-            drawTree(2, 0, 6.3);
-            drawTree(3, 0.55, 6.5);
-            drawTree(2, 19.6, 14.7);
-            drawTree(2, 18.9, 15.7);
-            drawTree(3, 19.9, 16);
+            sprites.push({ y: 4.9,  draw: () => drawTree(2, 1, 4.9) });
+            sprites.push({ y: 6.3,  draw: () => drawTree(2, 0, 6.3) });
+            sprites.push({ y: 6.5,  draw: () => drawTree(3, 0.55, 6.5) });
+            sprites.push({ y: 14.7, draw: () => drawTree(2, 19.6, 14.7) });
+            sprites.push({ y: 15.7, draw: () => drawTree(2, 18.9, 15.7) });
+            sprites.push({ y: 16,   draw: () => drawTree(3, 19.9, 16) });
         }
 
         // ==========================================================
         // Flat Ground Buildings
         // ==========================================================
         {
-            drawBuilding(7, 10, 17);
-            drawBuilding(4, 16.4, 13.3);
+            sprites.push({ y: 17,   draw: () => drawBuilding(7, 10, 17) });
+            sprites.push({ y: 13.3, draw: () => drawBuilding(4, 16.4, 13.3) });
         }
 
         // ==========================================================
         // Flat Ground Rocks (Static)
         // ==========================================================
         {
-            drawStaticRock(0, 19.02, 16.8);
-            drawStaticRock(3, 19.2, 16.5, true);
-            drawStaticRock(3, 4.3, 13.5, true);
-            drawStaticRock(3, 8.8, 10.5);
-            drawStaticRock(0, 8.3, 10.7);
-            drawStaticRock(2, 14.75, 10.5);
-            drawStaticRock(2, 3.1, 7.5);
-            drawStaticRock(1, 1, 5.5);
+            sprites.push({ y: 16.8, draw: () => drawStaticRock(0, 19.02, 16.8) });
+            sprites.push({ y: 16.5, draw: () => drawStaticRock(3, 19.2, 16.5, true) });
+            sprites.push({ y: 13.5, draw: () => drawStaticRock(3, 4.3, 13.5, true) });
+            sprites.push({ y: 10.5, draw: () => drawStaticRock(3, 8.8, 10.5) });
+            sprites.push({ y: 10.7, draw: () => drawStaticRock(0, 8.3, 10.7) });
+            sprites.push({ y: 10.5, draw: () => drawStaticRock(2, 14.75, 10.5) });
+            sprites.push({ y: 7.5,  draw: () => drawStaticRock(2, 3.1, 7.5) });
+            sprites.push({ y: 5.5,  draw: () => drawStaticRock(1, 1, 5.5) });
         }
 
         // ==========================================================
         // Forest Area Rocks
         // ==========================================================
         {
-            drawStaticRock(1, 15.1, 6.4, true);
+            sprites.push({ y: 6.4, draw: () => drawStaticRock(1, 15.1, 6.4, true) });
         }
 
         // ==========================================================
         // Ground Level Bushes
         // ==========================================================
         {
-            drawBush(3, 3.5, 16.5);
-            drawBush(0, 2.5, 16.5);
-            drawBush(1, 3.1, 16.25);
-            drawBush(1, 21.7, 15.7);
-            drawBush(0, 22.2, 15.4);
-            drawBush(1, 0.65, 13.5);
-            drawBush(2, 1.65, 13.5);
-            drawBush(0, 1.1, 13.1);
-            drawBush(3, 15.4, 12.8);
-            drawBush(1, 17.1, 12.7);
-            drawBush(0, 13.4, 12.3);
-            drawBush(1, 13.9, 12);
-            drawBush(3, 0.5, 11.7);
+            sprites.push({ y: 16.5,  draw: () => drawBush(3, 3.5, 16.5) });
+            sprites.push({ y: 16.5,  draw: () => drawBush(0, 2.5, 16.5) });
+            sprites.push({ y: 16.25, draw: () => drawBush(1, 3.1, 16.25) });
+            sprites.push({ y: 15.7,  draw: () => drawBush(1, 21.7, 15.7) });
+            sprites.push({ y: 15.4,  draw: () => drawBush(0, 22.2, 15.4) });
+            sprites.push({ y: 13.5,  draw: () => drawBush(1, 0.65, 13.5) });
+            sprites.push({ y: 13.5,  draw: () => drawBush(2, 1.65, 13.5) });
+            sprites.push({ y: 13.1,  draw: () => drawBush(0, 1.1, 13.1) });
+            sprites.push({ y: 12.8,  draw: () => drawBush(3, 15.4, 12.8) });
+            sprites.push({ y: 12.7,  draw: () => drawBush(1, 17.1, 12.7) });
+            sprites.push({ y: 12.3,  draw: () => drawBush(0, 13.4, 12.3) });
+            sprites.push({ y: 12,    draw: () => drawBush(1, 13.9, 12) });
+            sprites.push({ y: 11.7,  draw: () => drawBush(3, 0.5, 11.7) });
         }
 
         // ==========================================================
@@ -994,11 +992,11 @@
         // Elevated Ground Buildings
         // ==========================================================
         {
-            drawBuilding(7, 2, 12);
-            drawBuilding(3, 18.9, 9.9);
-            drawBuilding(5, 21.15, 9);
-            drawBuilding(4, 21.4, 8.7, true);
-            drawBuilding(3, 17, 8.65);
+            sprites.push({ y: 12,   draw: () => drawBuilding(7, 2, 12) });
+            sprites.push({ y: 9.9,  draw: () => drawBuilding(3, 18.9, 9.9) });
+            sprites.push({ y: 9,    draw: () => drawBuilding(5, 21.15, 9) });
+            sprites.push({ y: 8.7,  draw: () => drawBuilding(4, 21.4, 8.7, true) });
+            sprites.push({ y: 8.65, draw: () => drawBuilding(3, 17, 8.65) });
         }
 
         // ==========================================================
@@ -1137,36 +1135,36 @@
         // Middle Elevated Ground Trees
         // ==========================================================
         {
-            drawTree(3, 6.8, 4);
-            drawTree(2, 1.5, 8.9);
-            drawTree(3, 3.8, 9.6);
-            drawTree(2, 3.3, 10);
+            sprites.push({ y: 4,   draw: () => drawTree(3, 6.8, 4) });
+            sprites.push({ y: 8.9, draw: () => drawTree(2, 1.5, 8.9) });
+            sprites.push({ y: 9.6, draw: () => drawTree(3, 3.8, 9.6) });
+            sprites.push({ y: 10,  draw: () => drawTree(2, 3.3, 10) });
         }
 
         // ==========================================================
         // Middle Elevated Ground Bushes
         // ==========================================================
         {
-            drawBush(3, 20.4, 10.5);
-            drawBush(1, 4.6, 8.3);
+            sprites.push({ y: 10.5, draw: () => drawBush(3, 20.4, 10.5) });
+            sprites.push({ y: 8.3,  draw: () => drawBush(1, 4.6, 8.3) });
         }
 
         // ==========================================================
         // Middle Elevated Ground Building
         // ==========================================================
         {
-            drawBuilding(2, 3, 4);
+            sprites.push({ y: 4, draw: () => drawBuilding(2, 3, 4) });
         }
 
         // ==========================================================
         // Draw Sheep
         // ==========================================================
         {
-            drawSheep(18.7, 14.3, 4);
-            drawSheep(13.2, 11.8, 3, true);
-            drawSheep(22.2, 9.2, 2);
-            drawSheep(18.2, 9, 1, true);
-            drawSheep(16.4, 8.4, 0);
+            sprites.push({ y: 14.3, draw: () => drawSheep(18.7, 14.3, 4) });
+            sprites.push({ y: 11.8, draw: () => drawSheep(13.2, 11.8, 3, true) });
+            sprites.push({ y: 9.2,  draw: () => drawSheep(22.2, 9.2, 2) });
+            sprites.push({ y: 9,    draw: () => drawSheep(18.2, 9, 1, true) });
+            sprites.push({ y: 8.4,  draw: () => drawSheep(16.4, 8.4, 0) });
         }
 
         // ==========================================================
@@ -1174,26 +1172,36 @@
         // ==========================================================
         {
             const totalUnits = 12;
-            drawUnit('monk', 14.3, 15.6, 1, totalUnits);
-            drawUnit('archer', 9.5, 15.6, 0, totalUnits, true);
-            drawUnit('archer', 1.5, 10.6, 2, totalUnits);
-            drawUnit('warrior', 9.8, 9.1, 3, totalUnits);
-            drawUnit('warrior', 10.6, 8.4, 4, totalUnits);
-            drawUnit('lancer', 4.6, 8.2, 5, totalUnits);
-            drawUnit('lancer', 5.2, 7.8, 6, totalUnits);
-            drawUnit('lancer', 7.7, 6.5, 7, totalUnits);
-            drawUnit('lancer', 8.6, 5.9, 8, totalUnits);
-            drawUnit('lancer', 7.4, 5.6, 9, totalUnits);
-            drawUnit('archer', 4.3, 2.9, 10, totalUnits);
-            drawUnit('archer', 2.5, 2.6, 11, totalUnits, true);
+            sprites.push({ y: 15.6, draw: () => drawUnit('monk', 14.3, 15.6, 1, totalUnits) });
+            sprites.push({ y: 15.6, draw: () => drawUnit('archer', 9.5, 15.6, 0, totalUnits, true) });
+            sprites.push({ y: 10.6, draw: () => drawUnit('archer', 1.5, 10.6, 2, totalUnits) });
+            sprites.push({ y: 9.1,  draw: () => drawUnit('warrior', 9.8, 9.1, 3, totalUnits) });
+            sprites.push({ y: 8.4,  draw: () => drawUnit('warrior', 10.6, 8.4, 4, totalUnits) });
+            sprites.push({ y: 8.2,  draw: () => drawUnit('lancer', 4.6, 8.2, 5, totalUnits) });
+            sprites.push({ y: 7.8,  draw: () => drawUnit('lancer', 5.2, 7.8, 6, totalUnits) });
+            sprites.push({ y: 6.5,  draw: () => drawUnit('lancer', 7.7, 6.5, 7, totalUnits) });
+            sprites.push({ y: 5.9,  draw: () => drawUnit('lancer', 8.6, 5.9, 8, totalUnits) });
+            sprites.push({ y: 5.6,  draw: () => drawUnit('lancer', 7.4, 5.6, 9, totalUnits) });
+            sprites.push({ y: 2.9,  draw: () => drawUnit('archer', 4.3, 2.9, 10, totalUnits) });
+            sprites.push({ y: 2.6,  draw: () => drawUnit('archer', 2.5, 2.6, 11, totalUnits, true) });
         }
 
         // ==========================================================
-        // Draw Player
+        // Draw Player (queued at visual Y for correct depth)
         // ==========================================================
-        if (window.grid.getCurrentLayer() !== 0) {
-            drawPlayer(window.player.flipped());
+        {
+            const _py  = window.player ? window.player.getY() : 0;
+            const _dir = window.player ? window.player.getMoveDirection() : null;
+            const _prg = window.player ? window.player.getMoveProgress() : 0;
+            let _vy = _py;
+            if (_dir === 'down' || _dir === 'downleft' || _dir === 'downright') _vy = _py + _prg;
+            if (_dir === 'up'   || _dir === 'upleft'   || _dir === 'upright')   _vy = _py - _prg;
+            sprites.push({ y: _vy, draw: () => drawPlayer(window.player.flipped()) });
         }
+
+        // Flush: draw all sprites sorted high Y first (behind) → low Y last (in front)
+        sprites.sort((a, b) => b.y - a.y);
+        sprites.forEach(s => s.draw());
     }
 
     // Export the scene renderer

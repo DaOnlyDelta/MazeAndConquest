@@ -27,31 +27,62 @@
             case 'ArrowRight': newX++; moveDirection = 'right'; break;
             default: return; // Ignore any other keys
         }
-        if (!window.grid.canMoveTo(playerX, playerY, Math.round(newX), Math.round(newY))) return; // Blocked
-        isMoving = true;
-        moveProgress = 0;
+        // Normal walkable tile
+        if (window.grid.canMoveTo(playerX, playerY, Math.round(newX), Math.round(newY))) {
+            isMoving = true;
+            moveProgress = 0;
+            return;
+        }
+        // Slope entry — skip the horizontal leg, snap to slope tile and play diagonal
+        const slope = window.grid.getSlopeTransition(playerX, playerY, moveDirection);
+        if (slope) {
+            playerX = slope.slopeX;
+            playerY = slope.slopeY;
+            moveDirection = slope.diagDirection;
+            moveProgress = 0;
+            isMoving = true;
+        }
     });
+
+    // Map a {dx, dy} offset to a direction string for sprite/interpolation purposes
+    function offsetToDirection(dx, dy) {
+        if (dx === -1 && dy === -1) return 'upleft';
+        if (dx ===  1 && dy === -1) return 'upright';
+        if (dx === -1 && dy ===  1) return 'downleft';
+        if (dx ===  1 && dy ===  1) return 'downright';
+        return null;
+    }
 
     // Update player's position based on movement
     function updatePlayerPosition(deltaTime) {
         if (!isMoving) return;
-        const moveSpeed = 0.005; // Speed of movement (adjust as needed)
+        const moveSpeed = 1 / 150; // Complete one tile in ~150ms
         moveProgress += moveSpeed * deltaTime;
         if (moveProgress >= 1) {
-            // Move is complete, update player's grid position
+            // Advance player grid position by one step in moveDirection
             switch(moveDirection) {
-                case 'up':    playerY = Math.max(0, playerY - 1); break;
-                case 'down':  playerY = Math.min(GRID_HEIGHT - 1, playerY + 1); break;
-                case 'left':  playerX = Math.max(0, playerX - 1); break;
-                case 'right': playerX = Math.min(GRID_WIDTH - 1, playerX + 1); break;
+                case 'up':        playerY = Math.max(0, playerY - 1); break;
+                case 'down':      playerY = Math.min(GRID_HEIGHT - 1, playerY + 1); break;
+                case 'left':      playerX = Math.max(0, playerX - 1); break;
+                case 'right':     playerX = Math.min(GRID_WIDTH - 1, playerX + 1); break;
+                case 'upleft':    playerX = Math.max(0, playerX - 1); playerY = Math.max(0, playerY - 1); break;
+                case 'upright':   playerX = Math.min(GRID_WIDTH - 1, playerX + 1); playerY = Math.max(0, playerY - 1); break;
+                case 'downleft':  playerX = Math.max(0, playerX - 1); playerY = Math.min(GRID_HEIGHT - 1, playerY + 1); break;
+                case 'downright': playerX = Math.min(GRID_WIDTH - 1, playerX + 1); playerY = Math.min(GRID_HEIGHT - 1, playerY + 1); break;
             }
-            // Handle slope layer transitions — may adjust X and Y
+
+            // Check for a slope transition on the tile we just landed on
             const { dx, dy } = window.grid.onEnterTile(playerX, playerY, moveDirection);
-            playerX = Math.max(0, Math.min(GRID_WIDTH  - 1, playerX + dx));
-            playerY = Math.max(0, Math.min(GRID_HEIGHT - 1, playerY + dy));
-            isMoving = false;
-            moveDirection = null;
-            moveProgress = 0;
+            if (dx !== 0 || dy !== 0) {
+                // Animate the slope transition as a second move instead of teleporting
+                moveDirection = offsetToDirection(dx, dy);
+                moveProgress = 0;
+                // isMoving stays true — the second leg plays out next frames
+            } else {
+                isMoving = false;
+                moveDirection = null;
+                moveProgress = 0;
+            }
         }
     }
 

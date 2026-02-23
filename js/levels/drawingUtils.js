@@ -342,10 +342,14 @@
         // Interpolate visual position between current tile and destination tile
         let visualX = x;
         let visualY = y;
-        if (dir === 'up')    visualY = y - progress;
-        if (dir === 'down')  visualY = y + progress;
-        if (dir === 'left')  visualX = x - progress;
-        if (dir === 'right') visualX = x + progress;
+        if (dir === 'up')        visualY = y - progress;
+        if (dir === 'down')      visualY = y + progress;
+        if (dir === 'left')      visualX = x - progress;
+        if (dir === 'right')     visualX = x + progress;
+        if (dir === 'upleft')    { visualX = x - progress; visualY = y - progress; }
+        if (dir === 'upright')   { visualX = x + progress; visualY = y - progress; }
+        if (dir === 'downleft')  { visualX = x - progress; visualY = y + progress; }
+        if (dir === 'downright') { visualX = x + progress; visualY = y + progress; }
 
         const fullCycle  = config.frames * config.speed;
         const currentFrame = Math.floor(animState.getPlayerGlobalTick() % fullCycle / config.speed);

@@ -4,6 +4,8 @@
  */
 
 (function() {
+    let lastTimestamp = null;
+
     // ==========================================================
     // Animation Loop
     // ==========================================================
@@ -12,11 +14,15 @@
      * Updates animation frames and redraws the scene
      */
     function animate(timestamp) {
+        // Compute delta time in milliseconds since last frame
+        const deltaTime = lastTimestamp === null ? 0 : timestamp - lastTimestamp;
+        lastTimestamp = timestamp;
+
         // Update all active animation states
         window.animationState.updateAnimationFrames();
 
         // Update player position
-        window.player.updatePosition(timestamp);
+        window.player.updatePosition(deltaTime);
 
         // Redraw the entire scene with updated frame data
         window.sceneRenderer.drawScene();
