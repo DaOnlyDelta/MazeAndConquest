@@ -74,6 +74,8 @@ function transition(onMidTransition, doubleDuration = false) {
         }, true);
     }
 
+    switchToLevel(); // Auto-start the game for now, to skip the menu during development.
+
     function switchToCustomizeScreen() {
         transition(() => {
             mainMenu.style.display = 'none';

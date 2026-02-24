@@ -14,6 +14,13 @@
     let isMoving = false;
     let moveDirection = null; // 'up', 'down', 'left', 'right'
     let moveProgress = 0; // Progress of the current move (0 to 1)
+    let facingLeft = false; // Persisted horizontal facing when idle
+
+    function updateFacingFromDirection(direction) {
+        if (!direction) return;
+        if (direction.includes('left')) facingLeft = true;
+        if (direction.includes('right')) facingLeft = false;
+    }
 
     // Listen for keyboard input to move the player
     window.addEventListener('keydown', (e) => {
@@ -27,6 +34,7 @@
             case 'ArrowRight': newX++; moveDirection = 'right'; break;
             default: return; // Ignore any other keys
         }
+        updateFacingFromDirection(moveDirection);
         // Normal walkable tile
         if (window.grid.canMoveTo(playerX, playerY, Math.round(newX), Math.round(newY))) {
             isMoving = true;
@@ -39,6 +47,7 @@
             playerX = slope.slopeX;
             playerY = slope.slopeY;
             moveDirection = slope.diagDirection;
+            updateFacingFromDirection(moveDirection);
             moveProgress = 0;
             isMoving = true;
         }
@@ -76,6 +85,7 @@
             if (dx !== 0 || dy !== 0) {
                 // Animate the slope transition as a second move instead of teleporting
                 moveDirection = offsetToDirection(dx, dy);
+                updateFacingFromDirection(moveDirection);
                 moveProgress = 0;
                 // isMoving stays true — the second leg plays out next frames
             } else {
@@ -91,7 +101,7 @@
         getX: () => playerX,
         getY: () => playerY,
         isMoving: () => isMoving,
-        flipped: () => moveDirection === 'left', // For sprite flipping
+        flipped: () => facingLeft, // Persisted sprite flip direction
         getMoveDirection: () => moveDirection,
         getMoveProgress: () => moveProgress,
         updatePosition: updatePlayerPosition

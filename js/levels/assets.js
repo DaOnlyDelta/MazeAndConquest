@@ -166,9 +166,9 @@
     // ==========================================================
     // Load Sheep Sprites (animated resource)
     // ==========================================================
-    sheepIdle.src = './assets/Terrain/Resources/Meat/Sheep/Sheep_idle.png';
+    sheepIdle.src = './assets/Terrain/Resources/Meat/Sheep/Sheep_Idle.png';
     sheepIdle.onload = checkImagesLoaded;
-    sheepGrass.src = './assets/Terrain/Resources/Meat/Sheep/Sheep_grass.png';
+    sheepGrass.src = './assets/Terrain/Resources/Meat/Sheep/Sheep_Grass.png';
     sheepGrass.onload = checkImagesLoaded;
 
     // ==========================================================

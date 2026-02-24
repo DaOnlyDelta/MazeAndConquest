@@ -6,7 +6,7 @@
 (function() {
     const { ctx, TILES_X, TILES_Y, TILE_DISPLAY_SIZE } = window.canvasConfig;
     const { waterImg, g5, g3, g2, g1 } = window.levelAssets;
-    const { drawTileRow, drawWaterFoam, drawShadow, drawRockInWater, drawStaticRock, drawBush, drawBuilding, drawTree, drawSheep, drawUnit, drawPlayer } = window.drawingUtils;
+    const { drawTileRow: drawTileRowBase, drawWaterFoam, drawShadow, drawRockInWater, drawStaticRock, drawBush, drawBuilding, drawTree, drawSheep, drawUnit, drawPlayer } = window.drawingUtils;
 
     // ==========================================================
     // Main Scene Renderer
@@ -15,8 +15,22 @@
         // Clear canvas
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-        // Sprite depth queue — all sprites are pushed here and drawn in Y order at the end
+        // Global sprite queue sorted by depth Y (larger Y draws in front).
         const sprites = [];
+
+        // Ground tiles render immediately.
+        const drawTileRow = drawTileRowBase;
+
+        // Queue player once into global depth queue.
+        {
+            const _py  = window.player ? window.player.getY() : 0;
+            const _dir = window.player ? window.player.getMoveDirection() : null;
+            const _prg = window.player ? window.player.getMoveProgress() : 0;
+            let _vy = _py;
+            if (_dir === 'down' || _dir === 'downleft' || _dir === 'downright') _vy = _py + _prg;
+            if (_dir === 'up'   || _dir === 'upleft'   || _dir === 'upright')   _vy = _py - _prg;
+            sprites.push({ y: _vy, draw: () => drawPlayer(window.player.flipped()) });
+        }
 
         // Base water layer
         for (let row = 0; row < TILES_Y; row++) {
@@ -42,8 +56,8 @@
             drawWaterFoam(window.levelAssets.foamImg, 10, [ 6, 7, 8, 12, 22 ]);
             drawWaterFoam(window.levelAssets.foamImg, 11, [ 0, 5, 11, 12, 22 ]);
             drawWaterFoam(window.levelAssets.foamImg, 12, [ 0, 5, 7, 11, 21 ]);
-            drawWaterFoam(window.levelAssets.foamImg, 13, [ 0, 5, 6, 12 ]);
-            drawWaterFoam(window.levelAssets.foamImg, 14, [ 0, 1, 2, 3, 4, 12, 13 ]);
+            drawWaterFoam(window.levelAssets.foamImg, 13, [ 0, 5, 6, 12, 13, 14, 15, 16, 17 ]);
+            drawWaterFoam(window.levelAssets.foamImg, 14, [ 0, 1, 2, 3, 4, 21, 22 ]);
             drawWaterFoam(window.levelAssets.foamImg, 15, [ 9, 10, 14, 15, 16, 17, 22 ]);
             drawWaterFoam(window.levelAssets.foamImg, 16, [ 1, 2, 3, 8, 9, 10, 18, 19, 20, 21 ]);
         }
@@ -137,12 +151,12 @@
                 { sx: 1, sy: 1 },
                 { sx: 1, sy: 2 },
                 { sx: 2, sy: 3 },
-                { x: 13, sx: 0, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 }
+                { x: 13, sx: 0, sy: 2 },
+                { sx: 1, sy: 2 },
+                { sx: 1, sy: 2 },
+                { sx: 1, sy: 2 },
+                { sx: 1, sy: 2 },
+                { sx: 1, sy: 2 }
             ]);
 
             // Y=15
@@ -152,16 +166,7 @@
                 { sx: 1, sy: 2 },
                 { sx: 1, sy: 2 },
                 { sx: 2, sy: 2 },
-                { x: 13, sx: 0, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 0 },
+                { x: 22, sx: 1, sy: 0 },
                 { sx: 2, sy: 0 }
             ]);
 
@@ -189,102 +194,6 @@
                 { sx: 1, sy: 2 },
                 { sx: 2, sy: 2 }
             ]);
-
-            // Y=16
-            drawTileRow(g3, 16, [
-                { x: 10, sx: 0, sy: 0 },
-                { sx: 2, sy: 0 },
-                { x: 19, sx: 0, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 2, sy: 2 }
-            ]);
-
-            // Y=15
-            drawTileRow(g3, 15, [
-                { x: 1, sx: 0, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 2, sy: 2 },
-                { x: 13, sx: 0, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 0 },
-                { sx: 2, sy: 0 }
-            ]);
-
-            // Y=14
-            drawTileRow(g3, 14, [
-                { x: 1, sx: 0, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 2 },
-                { sx: 2, sy: 3 },
-                { x: 13, sx: 0, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 }
-            ]);
-
-            // Y=13
-            drawTileRow(g3, 13, [
-                { x: 1, sx: 0, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 2, sy: 1 },
-                { x: 8, sx: 3, sy: 3 },
-                { x: 12, sx: 0, sy: 2 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 }
-            ]);
-
-            // Y=12
-            drawTileRow(g3, 12, [
-                { x: 1, sx: 0, sy: 0 },
-                { sx: 1, sy: 0 },
-                { sx: 1, sy: 0 },
-                { sx: 1, sy: 0 },
-                { sx: 1, sy: 1 },
-                { sx: 2, sy: 1 },
-                { x: 12, sx: 0, sy: 0 },
-                { sx: 1, sy: 0 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 }
-            ]);
-
-            // Y=11
-            drawTileRow(g3, 11, [
-                { x: 5, sx: 0, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 2 },
-                { sx: 1, sy: 2 },
-                { sx: 2, sy: 2 },
-                { x: 14, sx: 0, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 }
-            ]);
-
         }
 
         // ==========================================================
@@ -694,9 +603,7 @@
 
             // Y=14
             drawTileRow(g1, 14, [
-                { x: 17, sx: 0, sy: 4 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 1 },
+                { x: 19, sx: 5, sy: 1 },
                 { sx: 6, sy: 1 },
                 { sx: 7, sy: 1 }
             ]);
@@ -705,9 +612,8 @@
             drawTileRow(g1, 15, [
                 { x: 15, sx: 5, sy: 3 },
                 { sx: 6, sy: 3 },
-                { x: 17, sx: 0, sy: 5 },
-                { x: 17, sx: 6, sy: 3 },
-                { sx: 6, sy: 2 },
+                { sx: 6, sy: 3 },
+                { sx: 6, sy: 3 },
                 { sx: 6, sy: 2 },
                 { sx: 6, sy: 2 },
                 { sx: 7, sy: 2 }
@@ -723,198 +629,6 @@
                 { sx: 6, sy: 4 },
                 { sx: 7, sy: 4 }
             ]);
-            
-            // Y=14
-            drawTileRow(g1, 14, [
-                { x: 17, sx: 0, sy: 4 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 7, sy: 1 }
-            ]);
-            
-            // Y=15
-            drawTileRow(g1, 15, [
-                { x: 15, sx: 5, sy: 3 },
-                { sx: 6, sy: 3 },
-                { x: 17, sx: 0, sy: 5 },
-                { x: 17, sx: 6, sy: 3 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 7, sy: 2 }
-            ]);
-            
-            // Y=13
-            drawTileRow(g1, 13, [
-                { x: 2, sx: 5, sy: 4 },
-                { sx: 6, sy: 4 },
-                { sx: 6, sy: 4 },
-                { sx: 3, sy: 5 },
-                { x: 19, sx: 5, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 7, sy: 1 },
-                { sx: 7, sy: 5 }
-            ]);
-
-            // Y=12
-            drawTileRow(g1, 12, [
-                { x: 2, sx: 5, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 2 },
-                { x: 5, sx: 7, sy: 4 },
-                { x: 5, sx: 3, sy: 4 },
-                { x: 14, sx: 8, sy: 4 },
-                { x: 17, sx: 5, sy: 4 },
-                { sx: 6, sy: 4 },
-                { sx: 5, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 7, sy: 2 },
-                { sx: 7, sy: 5 }
-            ]);
-
-            // Y=11
-            drawTileRow(g1, 11, [
-                { x: 2, sx: 5, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 7, sy: 2 },
-                { x: 13, sx: 5, sy: 5 },
-                { sx: 8, sy: 2 },
-                { x: 16, sx: 0, sy: 5 },
-                { sx: 5, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 7, sy: 2 }
-            ]);
-
-            // Y=10
-            drawTileRow(g1, 10, [
-                { x: 4, sx: 5, sy: 5 },
-                { sx: 8, sy: 1 },
-                { sx: 6, sy: 4 },
-                { sx: 6, sy: 4 },
-                { sx: 6, sy: 4 },
-                { sx: 6, sy: 4 },
-                { sx: 6, sy: 5 },
-                { sx: 6, sy: 5 },
-                { sx: 6, sy: 5 },
-                { sx: 5, sy: 2 },
-                { sx: 7, sy: 1 },
-                { sx: 6, sy: 4 },
-                { x: 16, sx: 6, sy: 4 },
-                { x: 16, sx: 0, sy: 4 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 7, sy: 1 }
-            ]);
-
-            // Y=9
-            drawTileRow(g1, 9, [
-                { x: 2, sx: 5, sy: 5 },
-                { sx: 6, sy: 5 },
-                { sx: 5, sy: 2 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 7, sy: 0 }
-            ]);
-
-            // Y=8
-            drawTileRow(g1, 8, [
-                { x: 1, sx: 5, sy: 5 },
-                { sx: 5, sy: 2 },
-                { sx: 6, sy: 2 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 7, sy: 0 }
-             ]);
-
-            // Y=7
-            drawTileRow(g1, 7, [
-                { x: 1, sx: 5, sy: 2 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 7, sy: 1 },
-                { sx: 3, sy: 5 }
-            ]);
-
-            // Y=6
-            drawTileRow(g1, 6, [
-                { x: 1, sx: 5, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { x: 8, sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { x: 14, sx: 6, sy: 4 },
-                { x: 14, sx: 3, sy: 4 },
-                { sx: 7, sy: 4 }
-            ]);
-
-            // Y=5
-            drawTileRow(g1, 5, [
-                { x: 1, sx: 5, sy: 0 },
-                { sx: 6, sy: 1 },
-                { sx: 6, sy: 1 },
-                { x: 11, sx: 6, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 0 },
-                { sx: 6, sy: 3 },
-                { sx: 7, sy: 3 }
-            ]);
-
         }
 
         // ==========================================================
@@ -993,10 +707,9 @@
         // ==========================================================
         {
             sprites.push({ y: 12,   draw: () => drawBuilding(7, 2, 12) });
-            sprites.push({ y: 9.9,  draw: () => drawBuilding(3, 18.9, 9.9) });
             sprites.push({ y: 9,    draw: () => drawBuilding(5, 21.15, 9) });
-            sprites.push({ y: 8.7,  draw: () => drawBuilding(4, 21.4, 8.7, true) });
-            sprites.push({ y: 8.65, draw: () => drawBuilding(3, 17, 8.65) });
+            sprites.push({ y: 8.9,  draw: () => drawBuilding(3, 17.9, 8.9) });
+            sprites.push({ y: 8.6,  draw: () => drawBuilding(4, 21.5, 8.6, true) });
         }
 
         // ==========================================================
@@ -1167,41 +880,41 @@
             sprites.push({ y: 8.4,  draw: () => drawSheep(16.4, 8.4, 0) });
         }
 
+        const totalUnits = 12;
+
         // ==========================================================
-        // Draw Units
+        // Draw Flat Ground Units
         // ==========================================================
         {
-            const totalUnits = 12;
-            sprites.push({ y: 15.6, draw: () => drawUnit('monk', 14.3, 15.6, 1, totalUnits) });
-            sprites.push({ y: 15.6, draw: () => drawUnit('archer', 9.5, 15.6, 0, totalUnits, true) });
-            sprites.push({ y: 10.6, draw: () => drawUnit('archer', 1.5, 10.6, 2, totalUnits) });
-            sprites.push({ y: 9.1,  draw: () => drawUnit('warrior', 9.8, 9.1, 3, totalUnits) });
+            sprites.push({ y: 15.6, draw: () => drawUnit('monk', 14.1, 15.6, 1, totalUnits) });
+            sprites.push({ y: 17.6, draw: () => drawUnit('archer', 9.5, 15.6, 0, totalUnits, true) });
+        }
+
+        // ==========================================================
+        // Draw Elevated Ground Units
+        // ==========================================================
+        {
             sprites.push({ y: 8.4,  draw: () => drawUnit('warrior', 10.6, 8.4, 4, totalUnits) });
-            sprites.push({ y: 8.2,  draw: () => drawUnit('lancer', 4.6, 8.2, 5, totalUnits) });
-            sprites.push({ y: 7.8,  draw: () => drawUnit('lancer', 5.2, 7.8, 6, totalUnits) });
-            sprites.push({ y: 6.5,  draw: () => drawUnit('lancer', 7.7, 6.5, 7, totalUnits) });
-            sprites.push({ y: 5.9,  draw: () => drawUnit('lancer', 8.6, 5.9, 8, totalUnits) });
-            sprites.push({ y: 5.6,  draw: () => drawUnit('lancer', 7.4, 5.6, 9, totalUnits) });
-            sprites.push({ y: 2.9,  draw: () => drawUnit('archer', 4.3, 2.9, 10, totalUnits) });
-            sprites.push({ y: 2.6,  draw: () => drawUnit('archer', 2.5, 2.6, 11, totalUnits, true) });
+            sprites.push({ y: 9.1,  draw: () => drawUnit('warrior', 9.8, 9.1, 3, totalUnits) });
+            sprites.push({ y: 12.6, draw: () => drawUnit('archer', 1.5, 10.6, 2, totalUnits) });
         }
 
         // ==========================================================
-        // Draw Player (queued at visual Y for correct depth)
+        // Draw Elevated Ground 2 Units
         // ==========================================================
         {
-            const _py  = window.player ? window.player.getY() : 0;
-            const _dir = window.player ? window.player.getMoveDirection() : null;
-            const _prg = window.player ? window.player.getMoveProgress() : 0;
-            let _vy = _py;
-            if (_dir === 'down' || _dir === 'downleft' || _dir === 'downright') _vy = _py + _prg;
-            if (_dir === 'up'   || _dir === 'upleft'   || _dir === 'upright')   _vy = _py - _prg;
-            sprites.push({ y: _vy, draw: () => drawPlayer(window.player.flipped()) });
+            sprites.push({ y: 4.6,  draw: () => drawUnit('archer', 2.5, 2.6, 11, totalUnits, true) });
+            sprites.push({ y: 4.9,  draw: () => drawUnit('archer', 4.3, 2.9, 10, totalUnits) });
+            sprites.push({ y: 5.6,  draw: () => drawUnit('lancer', 7.4, 5.6, 9, totalUnits) });
+            sprites.push({ y: 5.9,  draw: () => drawUnit('lancer', 8.6, 5.9, 8, totalUnits) });
+            sprites.push({ y: 6.5,  draw: () => drawUnit('lancer', 7.7, 6.5, 7, totalUnits) });
+            sprites.push({ y: 7.8,  draw: () => drawUnit('lancer', 5.2, 7.8, 6, totalUnits) });
+            sprites.push({ y: 8.2,  draw: () => drawUnit('lancer', 4.6, 8.2, 5, totalUnits) });
         }
 
-        // Flush: draw all sprites sorted high Y first (behind) → low Y last (in front)
-        sprites.sort((a, b) => b.y - a.y);
-        sprites.forEach(s => s.draw());
+        // Final flush: draw all sprites sorted by depth Y.
+        sprites.sort((a, b) => a.y - b.y);
+        sprites.forEach((sprite) => sprite.draw());
     }
 
     // Export the scene renderer
