@@ -16,31 +16,61 @@
     let moveProgress = 0; // Progress of the current move (0 to 1)
     let facingLeft = false; // Persisted horizontal facing when idle
 
+    // Track currently pressed keys to allow continuous movement without OS key repeat delay
+    const keysPressed = {
+        ArrowUp: false,
+        ArrowDown: false,
+        ArrowLeft: false,
+        ArrowRight: false
+    };
+
     function updateFacingFromDirection(direction) {
         if (!direction) return;
         if (direction.includes('left')) facingLeft = true;
         if (direction.includes('right')) facingLeft = false;
     }
 
-    // Listen for keyboard input to move the player
     window.addEventListener('keydown', (e) => {
-        if (isMoving) return; // Ignore input if already moving
+        if (keysPressed.hasOwnProperty(e.key)) {
+            keysPressed[e.key] = true;
+        }
+    });
+
+    window.addEventListener('keyup', (e) => {
+        if (keysPressed.hasOwnProperty(e.key)) {
+            keysPressed[e.key] = false;
+        }
+    });
+
+    function tryStartMove() {
+        if (isMoving) return;
+
         let newX = playerX;
         let newY = playerY;
-        switch(e.key) {
-            case 'ArrowUp':    newY--; moveDirection = 'up';    break;
-            case 'ArrowDown':  newY++; moveDirection = 'down';  break;
-            case 'ArrowLeft':  newX--; moveDirection = 'left';  break;
-            case 'ArrowRight': newX++; moveDirection = 'right'; break;
-            default: return; // Ignore any other keys
+        let attemptedDirection = null;
+
+        if (keysPressed.ArrowUp) {
+            newY--; attemptedDirection = 'up';
+        } else if (keysPressed.ArrowDown) {
+            newY++; attemptedDirection = 'down';
+        } else if (keysPressed.ArrowLeft) {
+            newX--; attemptedDirection = 'left';
+        } else if (keysPressed.ArrowRight) {
+            newX++; attemptedDirection = 'right';
+        } else {
+            return; // No movement keys pressed
         }
+
+        moveDirection = attemptedDirection;
         updateFacingFromDirection(moveDirection);
+        
         // Normal walkable tile
         if (window.grid.canMoveTo(playerX, playerY, Math.round(newX), Math.round(newY))) {
             isMoving = true;
             moveProgress = 0;
             return;
         }
+        
         // Slope entry — skip the horizontal leg, snap to slope tile and play diagonal
         const slope = window.grid.getSlopeTransition(playerX, playerY, moveDirection);
         if (slope) {
@@ -51,7 +81,7 @@
             moveProgress = 0;
             isMoving = true;
         }
-    });
+    }
 
     // Map a {dx, dy} offset to a direction string for sprite/interpolation purposes
     function offsetToDirection(dx, dy) {
@@ -64,8 +94,10 @@
 
     // Update player's position based on movement
     function updatePlayerPosition(deltaTime) {
+        tryStartMove(); // Check for input every frame if not moving
+        
         if (!isMoving) return;
-        const moveSpeed = 1 / 150; // Complete one tile in ~150ms
+        const moveSpeed = 1 / 250; // Complete one tile in ~250ms
         moveProgress += moveSpeed * deltaTime;
         if (moveProgress >= 1) {
             // Advance player grid position by one step in moveDirection

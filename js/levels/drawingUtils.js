@@ -324,14 +324,44 @@
         Pawn:    { fw: 192, fh: 192, speed: animState.PAWN_ANIMATION_SPEED,    frames: animState.PAWN_TOTAL_FRAMES    },
     };
 
+    const _playerRunImgCache = new Map();
+
+    function _getPlayerRunImg(color, hero) {
+        const key = `${color}:${hero}`;
+        if (_playerRunImgCache.has(key)) return _playerRunImgCache.get(key);
+        const entry = { img: new Image(), loaded: false };
+        entry.img.onload  = () => { entry.loaded = true; };
+        entry.img.onerror = () => { entry.loaded = false; };
+        
+        const config = PLAYER_RUN_CONFIGS[hero];
+        if (config && config.src) {
+            entry.img.src = config.src(color);
+        } else {
+            entry.img.src = `./assets/Units/${color} Units/${hero}/${hero}_Run.png`;
+        }
+        
+        _playerRunImgCache.set(key, entry);
+        return entry;
+    }
+
+    // Run animation configs (fill these out with correct values)
+    const PLAYER_RUN_CONFIGS = {
+        Warrior: { fw: 192, fh: 192, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Warrior/Warrior_Run.png` },
+        Lancer:  { fw: 192, fh: 192, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Lancer/Lancer_Run.png` },
+        Archer:  { fw: 192, fh: 192, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Archer/Archer_Run.png` },
+        Monk:    { fw: 192, fh: 192, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Monk/Monk_Run.png` },
+        Pawn:    { fw: 192, fh: 192, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Pawn/Pawn_Run.png` },
+    };
+
     function drawPlayer(flip = false) {
         const hero  = window.selectedHero  || 'Warrior';
         const color = window.selectedColor || 'Blue';
+        const isMoving = window.player ? window.player.isMoving() : false;
 
-        const entry = _getPlayerImg(color, hero);
+        const entry = isMoving ? _getPlayerRunImg(color, hero) : _getPlayerImg(color, hero);
         if (!entry.loaded) return; // Still loading, skip this frame
 
-        const config = PLAYER_CONFIGS[hero];
+        const config = isMoving ? PLAYER_RUN_CONFIGS[hero] : PLAYER_CONFIGS[hero];
         if (!config) return;
 
         const x = window.player ? window.player.getX() : 0;
