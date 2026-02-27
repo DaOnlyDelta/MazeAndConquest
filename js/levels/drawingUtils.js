@@ -347,9 +347,9 @@
     // Run animation configs (fill these out with correct values)
     const PLAYER_RUN_CONFIGS = {
         Warrior: { fw: 192, fh: 192, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Warrior/Warrior_Run.png` },
-        Lancer:  { fw: 192, fh: 192, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Lancer/Lancer_Run.png` },
-        Archer:  { fw: 192, fh: 192, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Archer/Archer_Run.png` },
-        Monk:    { fw: 192, fh: 192, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Monk/Monk_Run.png` },
+        Lancer:  { fw: 320, fh: 320, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Lancer/Lancer_Run.png` },
+        Archer:  { fw: 192, fh: 192, speed: 10, frames: 4, src: (color) => `./assets/Units/${color} Units/Archer/Archer_Run.png` },
+        Monk:    { fw: 192, fh: 192, speed: 10, frames: 4, src: (color) => `./assets/Units/${color} Units/Monk/Monk_Run.png` },
         Pawn:    { fw: 192, fh: 192, speed: 10, frames: 6, src: (color) => `./assets/Units/${color} Units/Pawn/Pawn_Run.png` },
     };
 

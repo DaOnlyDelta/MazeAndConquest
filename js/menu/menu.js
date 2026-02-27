@@ -70,7 +70,7 @@ function transition(onMidTransition, doubleDuration = false) {
     function switchToLevel() {
         transition(() => {
             mainMenu.style.display = 'none';
-            level.style.display = 'grid';
+            level.style.display = 'flex';
         }, true);
     }
 

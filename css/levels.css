@@ -5,10 +5,10 @@
     left: 0;
     height: 100%;
     width: 100%;
-    grid-template-columns: auto min(120vh, 96vw) auto;
-    grid-template-rows: 1fr;
     padding: 2vh;
     background-color: black;
+    justify-content: center;
+    align-items: center;
 }
 
 #level #canvasHolder {
@@ -23,6 +23,6 @@
     display: block;
     height: 100%;
     width: 100%;
-    border: 5px solid var(--primary-text-color);
-    border-radius: 5px;
+    border: 0.2vw solid var(--primary-text-color);
+    border-radius: 1vw;
 }

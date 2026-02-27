@@ -9,11 +9,78 @@
     const { drawTileRow: drawTileRowBase, drawWaterFoam, drawShadow, drawRockInWater, drawStaticRock, drawBush, drawBuilding, drawTree, drawSheep, drawUnit, drawPlayer } = window.drawingUtils;
 
     // ==========================================================
+    // Camera / Zoom
+    // ==========================================================
+    let cameraTargetX = null;
+    let cameraTargetY = null;
+    let isZoomEnabled = false;
+    
+    // Smooth zoom state
+    let currentZoom = 1.0;
+    let currentCameraX = 0;
+    let currentCameraY = 0;
+
+    function setCameraZoom(x, y) {
+        cameraTargetX = x;
+        cameraTargetY = y;
+        isZoomEnabled = true;
+    }
+
+    function resetCameraZoom() {
+        isZoomEnabled = false;
+    }
+
+    function isZoomed() {
+        return isZoomEnabled;
+    }
+
+    // ==========================================================
     // Main Scene Renderer
     // ==========================================================
     function drawScene() {
         // Clear canvas
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.restore();
+
+        ctx.save();
+
+        const targetZoom = isZoomEnabled ? 2.0 : 1.0;
+        const zoomSpeed = 0.05; // Adjust this value to change zoom speed (0.01 to 0.1 is usually good)
+        
+        // Calculate the center of the canvas
+        const centerX = ctx.canvas.width / 2;
+        const centerY = ctx.canvas.height / 2;
+
+        // Smoothly interpolate zoom
+        currentZoom += (targetZoom - currentZoom) * zoomSpeed;
+
+        // Smoothly interpolate camera position
+        if (isZoomEnabled) {
+            currentCameraX += (cameraTargetX - currentCameraX) * zoomSpeed;
+            currentCameraY += (cameraTargetY - currentCameraY) * zoomSpeed;
+        } else {
+            // When zooming out, move camera back to center
+            currentCameraX += (centerX - currentCameraX) * zoomSpeed;
+            currentCameraY += (centerY - currentCameraY) * zoomSpeed;
+        }
+
+        // Clamp camera position to prevent showing black borders
+        const maxCameraX = ctx.canvas.width - (centerX / currentZoom);
+        const minCameraX = centerX / currentZoom;
+        const maxCameraY = ctx.canvas.height - (centerY / currentZoom);
+        const minCameraY = centerY / currentZoom;
+
+        let clampedCameraX = Math.max(minCameraX, Math.min(maxCameraX, currentCameraX));
+        let clampedCameraY = Math.max(minCameraY, Math.min(maxCameraY, currentCameraY));
+
+        // Apply transformations if we are zoomed in or currently zooming
+        if (Math.abs(currentZoom - 1.0) > 0.01) {
+            ctx.translate(centerX, centerY);
+            ctx.scale(currentZoom, currentZoom);
+            ctx.translate(-clampedCameraX, -clampedCameraY);
+        }
 
         // Global sprite queue sorted by depth Y (larger Y draws in front).
         const sprites = [];
@@ -33,9 +100,15 @@
         }
 
         // Base water layer
-        for (let row = 0; row < TILES_Y; row++) {
-            for (let col = 0; col < TILES_X; col++) {
-                ctx.drawImage(waterImg, 0, 0, 64, 64, col * TILE_DISPLAY_SIZE, row * TILE_DISPLAY_SIZE, TILE_DISPLAY_SIZE, TILE_DISPLAY_SIZE);
+        // Draw slightly outside the bounds to prevent seams during sub-pixel rendering
+        for (let row = -1; row <= TILES_Y; row++) {
+            for (let col = -1; col <= TILES_X; col++) {
+                // Use Math.floor/ceil to prevent sub-pixel gaps
+                const drawX = Math.floor(col * TILE_DISPLAY_SIZE);
+                const drawY = Math.floor(row * TILE_DISPLAY_SIZE);
+                const drawSize = Math.ceil(TILE_DISPLAY_SIZE) + 1; // Add 1px overlap to hide seams
+                
+                ctx.drawImage(waterImg, 0, 0, 64, 64, drawX, drawY, drawSize, drawSize);
             }
         }
 
@@ -863,10 +936,15 @@
         // Final flush: draw all sprites sorted by depth Y.
         sprites.sort((a, b) => a.y - b.y);
         sprites.forEach((sprite) => sprite.draw());
+
+        ctx.restore();
     }
 
     // Export the scene renderer
     window.sceneRenderer = {
-        drawScene
+        drawScene,
+        setCameraZoom,
+        resetCameraZoom,
+        isZoomed
     };
 })();

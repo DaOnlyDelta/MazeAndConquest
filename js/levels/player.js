@@ -44,6 +44,7 @@
 
     function tryStartMove() {
         if (isMoving) return;
+        if (window.sceneRenderer && window.sceneRenderer.isZoomed()) return; // Disable movement while zoomed
 
         let newX = playerX;
         let newY = playerY;
@@ -128,6 +129,12 @@
         }
     }
 
+    function cancelMovement() {
+        isMoving = false;
+        moveDirection = null;
+        moveProgress = 0;
+    }
+
     // Export player state and update function for use in other modules
     window.player = {
         getX: () => playerX,
@@ -136,6 +143,7 @@
         flipped: () => facingLeft, // Persisted sprite flip direction
         getMoveDirection: () => moveDirection,
         getMoveProgress: () => moveProgress,
-        updatePosition: updatePlayerPosition
+        updatePosition: updatePlayerPosition,
+        cancelMovement: cancelMovement
     };
 })();
