@@ -50,7 +50,7 @@
     function drawWaterFoam(img, y, xPositions) {
         xPositions.forEach((x, index) => {
             const frameOffset = (index * 3) % animState.FOAM_TOTAL_FRAMES;
-            const currentFrame = (animState.getFoamFrame() + frameOffset) % animState.FOAM_TOTAL_FRAMES;
+            const currentFrame = window.waterEnabled === false ? 0 : (animState.getFoamFrame() + frameOffset) % animState.FOAM_TOTAL_FRAMES;
             
             const sx = currentFrame * animState.FOAM_FRAME_WIDTH;
             const sy = 0;
@@ -90,7 +90,7 @@
      */
     function drawRockInWater(i, x, y) {
         const img = rocks[i];
-        const currentFrame = animState.getRockFrame() % animState.ROCK_TOTAL_FRAMES;
+        const currentFrame = window.waterEnabled === false ? 0 : animState.getRockFrame() % animState.ROCK_TOTAL_FRAMES;
         
         const sx = currentFrame * animState.ROCK_FRAME_WIDTH;
         const sy = 0;
@@ -137,7 +137,7 @@
      */
     function drawBush(i, x, y) {
         const img = bushes[i];
-        const currentFrame = animState.getBushFrame() % animState.BUSH_TOTAL_FRAMES;
+        const currentFrame = window.treesEnabled === false ? 0 : animState.getBushFrame() % animState.BUSH_TOTAL_FRAMES;
         
         const sx = currentFrame * animState.BUSH_FRAME_WIDTH;
         const sy = 0;
@@ -184,7 +184,7 @@
      */
     function drawTree(i, x, y) {
         const img = trees[i];
-        const currentFrame = animState.getTreeFrame() % animState.TREE_TOTAL_FRAMES;
+        const currentFrame = window.treesEnabled === false ? 0 : animState.getTreeFrame() % animState.TREE_TOTAL_FRAMES;
         const sx = currentFrame * animState.TREE_FRAME_WIDTH;
         const sy = 0;
         const dx = x * TILE_DISPLAY_SIZE;
@@ -210,6 +210,13 @@
         const dx = x * TILE_DISPLAY_SIZE;
         const dy = y * TILE_DISPLAY_SIZE;
 
+        let img, sx, frameWidth, frameHeight;
+        if (window.unitsEnabled === false) {
+            img = sheepIdle;
+            sx = 0;
+            frameWidth = animState.SHEEP_IDLE_FRAME_WIDTH;
+            frameHeight = animState.SHEEP_IDLE_FRAME_HEIGHT;
+        } else {
         // Each sheep is positioned at a different point in the full cycle
         const tickOffset = Math.floor((id / total) * animState.SHEEP_FULL_CYCLE);
         const sheepTick = (animState.getSheepGlobalTick() + tickOffset) % animState.SHEEP_FULL_CYCLE;
@@ -217,7 +224,6 @@
         // Determine phase and frame from the per-sheep tick
         const idleSection = animState.SHEEP_CYCLE_IDLE_FRAMES * animState.SHEEP_IDLE_CYCLES_PER_GRASS_CYCLE;
 
-        let img, sx, frameWidth, frameHeight;
         if (sheepTick < idleSection) {
             const currentFrame = Math.floor(sheepTick / animState.SHEEP_IDLE_ANIMATION_SPEED) % animState.SHEEP_IDLE_TOTAL_FRAMES;
             sx = currentFrame * animState.SHEEP_IDLE_FRAME_WIDTH;
@@ -231,6 +237,7 @@
             img = sheepGrass;
             frameWidth = animState.SHEEPGRASS_FRAME_WIDTH;
             frameHeight = animState.SHEEPGRASS_FRAME_HEIGHT;
+        }
         }
 
         if (flip) {
@@ -268,10 +275,9 @@
 
         const config = configs[unitType];
 
-        // Each unit is offset by an equal fraction of the full cycle
         const fullCycle = config.frames * config.speed;
         const tickOffset = Math.floor((id / total) * fullCycle);
-        const unitTick = (animState.getUnitGlobalTick() + tickOffset) % fullCycle;
+        const unitTick = window.unitsEnabled === false ? 0 : (animState.getUnitGlobalTick() + tickOffset) % fullCycle;
         const currentFrame = Math.floor(unitTick / config.speed) % config.frames;
         const sx = currentFrame * config.fw;
         const dx = x * TILE_DISPLAY_SIZE;

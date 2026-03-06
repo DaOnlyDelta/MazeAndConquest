@@ -294,6 +294,43 @@
     overflow: hidden;
 }
 
+#mainMenu #settingsHolder #settingsGraphics #graphicsWrapper {
+    position: absolute;
+    top: 57%;
+    left: 10%;
+    right: 10%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+#mainMenu #settingsHolder #settingsGraphics #graphicsWrapper .toggleRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    height: 64px;
+}
+
+#mainMenu #settingsHolder #settingsGraphics #graphicsWrapper .toggleRow h3 {
+    font-size: 2.8rem;
+    color: var(--primary-text-color);
+    text-shadow: 2px 2px black;
+}
+
+#mainMenu #settingsHolder #settingsGraphics #graphicsWrapper .toggleRow .toggleIcon {
+    background-image: url('../assets/UI Elements/UI Elements/Icons/Icon_07.png');
+    height: 64px;
+    width: 64px;
+    cursor: var(--cursor-pointer);
+    flex-shrink: 0;
+}
+
+#mainMenu #settingsHolder #settingsGraphics #graphicsWrapper .toggleRow .toggleIcon.off {
+    filter: grayscale(1) opacity(0.4);
+}
+
 
 #mainMenu #freeMusic #musicImageHolder {
     position: absolute;

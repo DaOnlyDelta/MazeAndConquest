@@ -51,11 +51,29 @@
 #level #paperHolder .paper .paper-text {
     position: absolute;
     top: 8%;
-    left: 20%;
-    right: 15%;
+    left: 17%;
+    right: 14%;
     bottom: 17%;
     font-size: 2.4cqh;
     line-height: 1.6;
+}
+
+#level #paperHolder .paper .paper-x {
+    position: absolute;
+    top: 4%;
+    right: 6%;
+    width: 8%;
+    aspect-ratio: 1;
+    background-image: url('../assets/UI Elements/UI Elements/Icons/Icon_09.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: var(--cursor-pointer);
+    z-index: 10;
+    transition: scale 0.1s ease;
+}
+
+#level #paperHolder .paper .paper-x:hover {
+    scale: 1.2;
 }
 
 #level #paperHolder .paper.active {
@@ -79,7 +97,32 @@
 }
 
 #level #paperHolder .paper .paper-text .you-line {
-    justify-content: flex-end;
-    flex-direction: row-reverse;
-    text-align: right;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+#level #notificationBanner {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%) scale(var(--canvas-scale, 1));
+    transform-origin: top center;
+    z-index: 99998;
+    transition: top ease 0.6s;
+    pointer-events: none;
+}
+
+#level #notificationBanner.active {
+    top: 8%;
+}
+
+#level #notificationBanner #notificationText {
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 2.4em;
+    white-space: nowrap;
+    pointer-events: none;
 }

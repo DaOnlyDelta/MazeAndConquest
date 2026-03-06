@@ -29,6 +29,7 @@ function transition(onMidTransition, doubleDuration = false) {
     const aboutWindow = document.getElementById('aboutWindow');
     const settingsWindow = document.getElementById('settingsWindow');
     const settingsAudio = document.getElementById('settingsAudio');
+    const settingsGraphics = document.getElementById('settingsGraphics');
 
     // Tracks which inner settings panel is open (e.g. audio).
     let currentPanel = null;
@@ -53,8 +54,9 @@ function transition(onMidTransition, doubleDuration = false) {
 
     // Draw the paper backgrounds once.
     drawPaper(aboutWindow, 4, 4);
-    drawPaper(settingsWindow, 4, 4);
+    drawPaper(settingsWindow, 4, 3);
     drawPaper(settingsAudio, 4, 3);
+    drawPaper(settingsGraphics, 4, 4);
 
     // X buttons close either the currently open panel, or the window.
     const settingsXs = Array.from(document.getElementsByClassName('settingsX'));
@@ -74,7 +76,7 @@ function transition(onMidTransition, doubleDuration = false) {
         }, true);
     }
 
-    switchToLevel(); // Auto-start the game for now, to skip the menu during development.
+    // switchToLevel(); // Auto-start the game for now, to skip the menu during development.
 
     function switchToCustomizeScreen() {
         transition(() => {
@@ -144,6 +146,10 @@ function transition(onMidTransition, doubleDuration = false) {
                 settingsAudio.classList.add('active');
                 currentPanel = settingsAudio;
                 syncAudioIcons();
+            }
+            if (div.id === 'settingsGraphicsOption') {
+                settingsGraphics.classList.add('active');
+                currentPanel = settingsGraphics;
             }
         });
     });
@@ -265,6 +271,30 @@ function transition(onMidTransition, doubleDuration = false) {
     attachSliderDrag(sfxSlider, (t) => {
         // From 0.0 (left) to 0.1 (right)
         window.setSfxVolume(t * 0.1);
+    });
+
+    // ==========================================================
+    // Graphics toggles
+    // ==========================================================
+    window.unitsEnabled = true;
+    window.treesEnabled = true;
+    window.waterEnabled = true;
+
+    const graphicsToggles = [
+        { id: 'unitsToggle',  flag: 'unitsEnabled'  },
+        { id: 'treesToggle',  flag: 'treesEnabled'  },
+        { id: 'waterToggle',  flag: 'waterEnabled'  },
+    ];
+
+    graphicsToggles.forEach(({ id, flag }) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.toggle('off', !window[flag]);
+        el.addEventListener('click', () => {
+            playSound('click2');
+            window[flag] = !window[flag];
+            el.classList.toggle('off', !window[flag]);
+        });
     });
 
     // After loading, show the veil

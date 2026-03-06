@@ -924,7 +924,7 @@
         // Draw Flat Ground Units
         // ==========================================================
         {
-            sprites.push({ y: 15.6, draw: () => drawUnit('monk', 14.1, 15.6, 1, totalUnits) });
+            sprites.push({ y: monkPos.y, draw: () => drawUnit('monk', monkPos.x, monkPos.y, 1, totalUnits) });
             sprites.push({ y: 17.6, draw: () => drawUnit('archer', 9.5, 15.6, 0, totalUnits, true) });
         }
 
@@ -961,12 +961,19 @@
     }
 
     // Export the scene renderer
+    let monkPos = { x: 14.1, y: 15.6 };
+
+    function setMonkPosition(x, y) {
+        monkPos = { x, y };
+    }
+
     window.sceneRenderer = {
         drawScene,
         setCameraZoom,
         resetCameraZoom,
         isZoomed,
         addWaypoint,
-        clearWaypoints
+        clearWaypoints,
+        setMonkPosition
     };
 })();

@@ -72,13 +72,9 @@
             return;
         }
         
-        // Slope entry — skip the horizontal leg, snap to slope tile and play diagonal
+        // Slope entry — walk into the slope tile normally; onEnterTile handles the diagonal
         const slope = window.grid.getSlopeTransition(playerX, playerY, moveDirection);
         if (slope) {
-            playerX = slope.slopeX;
-            playerY = slope.slopeY;
-            moveDirection = slope.diagDirection;
-            updateFacingFromDirection(moveDirection);
             moveProgress = 0;
             isMoving = true;
         }

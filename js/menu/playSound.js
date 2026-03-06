@@ -18,7 +18,6 @@ let sfxEnabled = true;
 		hover: new Audio('./sounds/hover.mp3'),
 		click: new Audio('./sounds/click.mp3'),
 		click2: new Audio('./sounds/click2.mp3'),
-		gameOver: new Audio('./sounds/game-over-417465.mp3'),
 		winner: new Audio('./sounds/winner-game-sound-404167.mp3'),
 	};
 

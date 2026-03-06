@@ -52,8 +52,7 @@
         <div class="settingsX"></div>
         <div id="settingsWrapper">
             <div class="settingsOption hoverResize1" id="settingsAudioOption"><h3>Audio</h3></div>
-            <div class="settingsOption hoverResize1" id="settingsGameplayOption"><h3>Gameplay</h3></div>
-            <div class="settingsOption hoverResize1" id="settingsKeybindsOption"><h3>Keybinds</h3></div>
+            <div class="settingsOption hoverResize1" id="settingsGraphicsOption"><h3>Graphics</h3></div>
         </div>
     </div>
     <div id="settingsHolder">
@@ -70,6 +69,24 @@
                     <div id="sfxImage"></div>
                     <div id="sfxSldier">
                     </div>
+                </div>
+            </div>
+        </div>
+        <div id="settingsGraphics" class="centerOffscreen">
+            <h2>Graphics</h2>
+            <div class="settingsX"></div>
+            <div id="graphicsWrapper">
+                <div class="toggleRow">
+                    <div id="unitsToggle" class="toggleIcon hoverResize2"></div>
+                    <h3>Units</h3>
+                </div>
+                <div class="toggleRow">
+                    <div id="treesToggle" class="toggleIcon hoverResize2"></div>
+                    <h3>Trees &amp; Bushes</h3>
+                </div>
+                <div class="toggleRow">
+                    <div id="waterToggle" class="toggleIcon hoverResize2"></div>
+                    <h3>Water</h3>
                 </div>
             </div>
         </div>
@@ -112,6 +129,9 @@
 <div id="level">
     <div id="paperHolder">
         
+    </div>
+    <div id="notificationBanner">
+        <span id="notificationText"></span>
     </div>
     <div id="canvasHolder">
         <canvas id="levelCanvas"></canvas>
