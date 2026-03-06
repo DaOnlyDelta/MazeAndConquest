@@ -44,6 +44,11 @@ function drawCurvedBanner(parentDiv, bannerWidth, bannerHeight) {
     canvas.height = (topH + midH * bannerHeight + bottomH) * scale;
     canvas.width = (lSideW + midW * bannerWidth + rSideW) * scale;
 
+    // Scale the paper with the canvas container (canvasHolder = 25 * 64 = 1600px natural width)
+    parentDiv.style.width = (canvas.width / 1600 * 100) + '%';
+    canvas.style.width = '100%';
+    canvas.style.height = 'auto';
+
     // ==========================================================
     // Render
     // ==========================================================
