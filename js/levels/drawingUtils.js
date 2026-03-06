@@ -5,7 +5,7 @@
 
 (function() {
     const { ctx, TILE_SOURCE_SIZE, TILE_DISPLAY_SIZE } = window.canvasConfig;
-    const { waterImg, foamImg, shadow, rocks, bushes, staticRocks, buildings, trees, sheepIdle, sheepGrass, units } = window.levelAssets;
+    const { waterImg, foamImg, shadow, rocks, bushes, staticRocks, buildings, trees, sheepIdle, sheepGrass, units, cursorImg } = window.levelAssets;
     const animState = window.animationState;
 
     // ==========================================================
@@ -401,6 +401,23 @@
     }
 
     // ==========================================================
+    // Waypoint Marker
+    // ==========================================================
+    /**
+     * Draws a pulsing waypoint cursor centered on the given grid tile.
+     * @param {number} x - Grid column
+     * @param {number} y - Grid row
+     */
+    function drawWaypoint(x, y) {
+        const tick = animState.getPlayerGlobalTick();
+        const pulse = 1 + (Math.sin(tick * 0.03) * 0.5 + 0.5) * 0.35;
+        const size = TILE_DISPLAY_SIZE * pulse;
+        const dx = x * TILE_DISPLAY_SIZE + (TILE_DISPLAY_SIZE - size) / 2;
+        const dy = y * TILE_DISPLAY_SIZE + (TILE_DISPLAY_SIZE - size) / 2;
+        ctx.drawImage(cursorImg, 0, 0, 122, 122, dx, dy, size, size);
+    }
+
+    // ==========================================================
     // Export Drawing Utilities
     // ==========================================================
     window.drawingUtils = {
@@ -414,6 +431,7 @@
         drawTree,
         drawSheep,
         drawUnit,
-        drawPlayer
+        drawPlayer,
+        drawWaypoint
     };
 })();

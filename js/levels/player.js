@@ -7,14 +7,14 @@
     const SUBTILE_SIZE = 16; // Each subtile is 16x16 pixels (since our tiles are 64x64)
 
     // Player's position
-    let playerX = 17;
-    let playerY = 4;
+    let playerX = 18;
+    let playerY = 5;
 
     // Player's movement state
     let isMoving = false;
     let moveDirection = null; // 'up', 'down', 'left', 'right'
     let moveProgress = 0; // Progress of the current move (0 to 1)
-    let facingLeft = false; // Persisted horizontal facing when idle
+    let facingLeft = true; // Persisted horizontal facing when idle
 
     // Track currently pressed keys to allow continuous movement without OS key repeat delay
     const keysPressed = {
@@ -144,6 +144,7 @@
         getMoveDirection: () => moveDirection,
         getMoveProgress: () => moveProgress,
         updatePosition: updatePlayerPosition,
-        cancelMovement: cancelMovement
+        cancelMovement: cancelMovement,
+        updateFacingFromDirection: updateFacingFromDirection
     };
 })();

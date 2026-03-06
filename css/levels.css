@@ -26,3 +26,59 @@
     border: 0.2vw solid var(--primary-text-color);
     border-radius: 1vw;
 }
+
+#level #paperHolder {
+    position: absolute;
+    top: 2vh;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 100000;
+}
+
+#level #paperHolder .paper {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: fit-content;
+    width: fit-content;
+    transition: top ease 1s;
+}
+
+#level #paperHolder .paper .paper-text {
+    position: absolute;
+    top: 8%;
+    left: 20%;
+    right: 15%;
+    bottom: 17%;
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+#level #paperHolder .paper.active {
+    top: 50%;
+}
+
+#level #paperHolder .paper .paper-text .dialogue-line {
+    display: flex;
+    margin-bottom: 0.5em;
+}
+
+#level #paperHolder .paper .paper-text .dialogue-line .speaker {
+    white-space: nowrap;
+    margin-right: 0.4em;
+    font-style: italic;
+}
+
+#level #paperHolder .paper .paper-text .guard-line {
+    justify-content: flex-start;
+    text-align: left;
+}
+
+#level #paperHolder .paper .paper-text .you-line {
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    text-align: right;
+}

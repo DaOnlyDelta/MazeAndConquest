@@ -6,7 +6,22 @@
 (function () {
     const { ctx, TILES_X, TILES_Y, TILE_DISPLAY_SIZE } = window.canvasConfig;
     const { waterImg, g5, g3, g2, g1 } = window.levelAssets;
-    const { drawTileRow: drawTileRowBase, drawWaterFoam, drawShadow, drawRockInWater, drawStaticRock, drawBush, drawBuilding, drawTree, drawSheep, drawUnit, drawPlayer } = window.drawingUtils;
+    const { drawTileRow: drawTileRowBase, drawWaterFoam, drawShadow, drawRockInWater, drawStaticRock, drawBush, drawBuilding, drawTree, drawSheep, drawUnit, drawPlayer, drawWaypoint } = window.drawingUtils;
+
+    // ==========================================================
+    // Waypoint Markers
+    // ==========================================================
+    // Each entry: { x, y } in grid coordinates.
+    // Managed externally via addWaypoint / clearWaypoints.
+    const waypointMarkers = [];
+
+    function addWaypoint(x, y) {
+        waypointMarkers.push({ x, y });
+    }
+
+    function clearWaypoints() {
+        waypointMarkers.length = 0;
+    }
 
     // ==========================================================
     // Camera / Zoom
@@ -933,6 +948,11 @@
             sprites.push({ y: 6.9, draw: () => drawUnit('lancer', 4.2, 8, 5, totalUnits) });
         }
 
+        // Queue waypoint markers into the depth-sorted sprite list.
+        waypointMarkers.forEach(({ x, y }) => {
+            sprites.push({ y: y - 0.01, draw: () => drawWaypoint(x, y) });
+        });
+
         // Final flush: draw all sprites sorted by depth Y.
         sprites.sort((a, b) => a.y - b.y);
         sprites.forEach((sprite) => sprite.draw());
@@ -945,6 +965,8 @@
         drawScene,
         setCameraZoom,
         resetCameraZoom,
-        isZoomed
+        isZoomed,
+        addWaypoint,
+        clearWaypoints
     };
 })();

@@ -33,11 +33,14 @@
     const sheepIdle = new Image();
     const sheepGrass = new Image();
 
+    // Waypoint cursor
+    const cursorImg = new Image();
+
     // ==========================================================
     // Image Loading Management
     // ==========================================================
     let imagesLoaded = 0;
-    const TOTAL_IMAGES = 41; // 7 base + 4 rocks + 4 bushes + 4 static rocks + 8 buildings + 4 trees + 4 stumps + 2 sheep + 4 unit sprites
+    const TOTAL_IMAGES = 42; // 7 base + 4 rocks + 4 bushes + 4 static rocks + 8 buildings + 4 trees + 4 stumps + 2 sheep + 4 unit sprites + 1 cursor
 
     function checkImagesLoaded() {
         imagesLoaded++;
@@ -171,6 +174,9 @@
     sheepGrass.src = './assets/Terrain/Resources/Meat/Sheep/Sheep_Grass.png';
     sheepGrass.onload = checkImagesLoaded;
 
+    cursorImg.src = './assets/UI Elements/UI Elements/Cursors/Cursor_04.png';
+    cursorImg.onload = checkImagesLoaded;
+
     // ==========================================================
     // Export Assets for use in other modules
     // ==========================================================
@@ -187,6 +193,7 @@
         stumps,
         sheepIdle,
         sheepGrass,
-        units
+        units,
+        cursorImg
     };
 })();
