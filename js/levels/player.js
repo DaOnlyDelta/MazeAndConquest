@@ -30,15 +30,19 @@
         if (direction.includes('right')) facingLeft = false;
     }
 
+    const wasdMap = { w: 'ArrowUp', a: 'ArrowLeft', s: 'ArrowDown', d: 'ArrowRight' };
+
     window.addEventListener('keydown', (e) => {
-        if (keysPressed.hasOwnProperty(e.key)) {
-            keysPressed[e.key] = true;
+        const mapped = wasdMap[e.key] || e.key;
+        if (keysPressed.hasOwnProperty(mapped)) {
+            keysPressed[mapped] = true;
         }
     });
 
     window.addEventListener('keyup', (e) => {
-        if (keysPressed.hasOwnProperty(e.key)) {
-            keysPressed[e.key] = false;
+        const mapped = wasdMap[e.key] || e.key;
+        if (keysPressed.hasOwnProperty(mapped)) {
+            keysPressed[mapped] = false;
         }
     });
 

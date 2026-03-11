@@ -48,49 +48,49 @@
     }
 
     const paper1 = makePaper(3, 5, `
-        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> Ah, a traveller. You look like someone who knows how to handle themselves. Might I have a word?</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> Speak freely.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> I am Brother Aldric. Many seasons past, the King cast me from these lands for speaking truths he did not wish to hear. I hold no ill will — yet the exile weighs heavy on my soul.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> The royal guard would turn me away at the gate, but you may walk freely where I cannot. Would you seek audience with the King and plead my case? I wish only to return in peace, to tend to my livestock.</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> I will see what can be done.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> May your words find favour in his ears. Thank you, traveller.</div>
+        <div class="dialogue-line"><span class="speaker">— Aldric:</span> Ah, a traveller. You look like someone who knows how to handle themselves. Might I have a word?</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> Speak freely.</div>
+        <div class="dialogue-line"><span class="speaker">— Aldric:</span> I am Brother Aldric. Many seasons past, the King cast me from these lands for speaking truths he did not wish to hear. I hold no ill will — yet the exile weighs heavy on my soul.</div>
+        <div class="dialogue-line"><span class="speaker">— Aldric:</span> The royal guard would turn me away at the gate, but you may walk freely where I cannot. Would you seek audience with the King and plead my case? I wish only to return in peace, to tend to my livestock.</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> I will see what can be done.</div>
+        <div class="dialogue-line"><span class="speaker">— Aldric:</span> May your words find favour in his ears. Thank you, traveller.</div>
     `);
 
     const paper2 = makePaper(4, 5, `
-        <div class="dialogue-line guard-line"><span class="speaker">— Guards:</span> Halt! State your business at the King's gate, stranger.</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> I come in peace. I seek an audience with His Majesty on behalf of Brother Aldric.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— Guards:</span> Aldric? The exiled monk? You dare speak that name before these walls?</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> I do. The man holds no malice. He asks only for mercy — to return and tend to his lifestock.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— Guards:</span> The King's decree stands. He was cast out for stirring unrest among the people.</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> He spoke his conscience. No sword was raised, no blood was shed. Surely mercy costs a king less than regret.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— Guards:</span> ...His Majesty will see you. Follow us — and mind your tongue before the throne.</div>
+        <div class="dialogue-line"><span class="speaker">— Guards:</span> Halt! State your business at the King's gate, stranger.</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> I come in peace. I seek an audience with His Majesty on behalf of Brother Aldric.</div>
+        <div class="dialogue-line"><span class="speaker">— Guards:</span> Aldric? The exiled monk? You dare speak that name before these walls?</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> I do. The man holds no malice. He asks only for mercy — to return and tend to his lifestock.</div>
+        <div class="dialogue-line"><span class="speaker">— Guards:</span> The King's decree stands. He was cast out for stirring unrest among the people.</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> He spoke his conscience. No sword was raised, no blood was shed. Surely mercy costs a king less than regret.</div>
+        <div class="dialogue-line"><span class="speaker">— Guards:</span> ...His Majesty will see you. Follow us — and mind your tongue before the throne.</div>
     `);
 
     const paper3 = makePaper(3, 5, `
-        <div class="dialogue-line guard-line"><span class="speaker">— King:</span> So. You are the one who dares plead for the monk's return.</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> Your Majesty. Brother Aldric means no harm. He asks only to live quietly and tend to his flock.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— King:</span> His flock. Yes, he was always fond of those wretched sheep.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— King:</span> Very well. I am a reasonable man. My winter stores run thin and my seamstress grows impatient. Bring me wool — from Aldric's own sheep — and I shall lift the exile. Let it be a token of his goodwill.</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> And you will hold to your word?</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— King:</span> A king's word is his law, stranger. Now go. Do not keep me waiting.</div>
+        <div class="dialogue-line"><span class="speaker">— King:</span> So. You are the one who dares plead for the monk's return.</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> Your Majesty. Brother Aldric means no harm. He asks only to live quietly and tend to his flock.</div>
+        <div class="dialogue-line"><span class="speaker">— King:</span> His flock. Yes, he was always fond of those wretched sheep.</div>
+        <div class="dialogue-line"><span class="speaker">— King:</span> Very well. I am a reasonable man. My winter stores run thin and my seamstress grows impatient. Bring me wool — from Aldric's own sheep — and I shall lift the exile. Let it be a token of his goodwill.</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> And you will hold to your word?</div>
+        <div class="dialogue-line"><span class="speaker">— King:</span> A king's word is his law, stranger. Now go. Do not keep me waiting.</div>
     `);
     
     const paper4 = makePaper(3, 4, `
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> Brother Aldric. I have spoken with the King.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> And? Does he grant me leave to return?</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> He will lift the exile — but he asks for wool. From your own sheep. As a token of goodwill, he says.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> Of course he does. The man never could resist a good fleece.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> Very well. Take wool from my house and give it to the King. Report back to me once you're done.</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> I will not be long.</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> Brother Aldric. I have spoken with the King.</div>
+        <div class="dialogue-line"><span class="speaker">— Aldric:</span> And? Does he grant me leave to return?</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> He will lift the exile — but he asks for wool. From your own sheep. As a token of goodwill, he says.</div>
+        <div class="dialogue-line"><span class="speaker">— Aldric:</span> Of course he does. The man never could resist a good fleece.</div>
+        <div class="dialogue-line"><span class="speaker">— Aldric:</span> Very well. Take wool from my house and give it to the King. Report back to me once you're done.</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> I will not be long.</div>
     `);
 
     const paper5 = makePaper(3, 5, `
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> Your Majesty. I bring the wool, as promised.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— King:</span> So you do. And in good time. I had half-expected you to vanish like the rest of them.</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> I gave my word. As did you.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— King:</span> So I did. Very well. The exile is lifted. Brother Aldric may return to these lands — so long as he keeps his sheep and his opinions to himself.</div>
-        <div class="dialogue-line you-line"><span class="speaker">— You:</span> He will be glad to hear it.</div>
-        <div class="dialogue-line guard-line"><span class="speaker">— King:</span> See that he is. Now go. You have served well, traveller.</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> Your Majesty. I bring the wool, as promised.</div>
+        <div class="dialogue-line"><span class="speaker">— King:</span> So you do. And in good time. I had half-expected you to vanish like the rest of them.</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> I gave my word. As did you.</div>
+        <div class="dialogue-line"><span class="speaker">— King:</span> So I did. Very well. The exile is lifted. Brother Aldric may return to these lands — so long as he keeps his sheep and his opinions to himself.</div>
+        <div class="dialogue-line"><span class="speaker">— You:</span> He will be glad to hear it.</div>
+        <div class="dialogue-line"><span class="speaker">— King:</span> See that he is. Now go. You have served well, traveller.</div>
     `);
 
     // ==========================================================
