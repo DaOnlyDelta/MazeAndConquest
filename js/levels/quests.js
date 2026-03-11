@@ -34,7 +34,12 @@
     // Notification banner
     const notificationBanner = document.getElementById('notificationBanner');
     const notificationText = document.getElementById('notificationText');
-    drawBanner(notificationBanner, 5, 1.2, 3);
+    drawBanner(notificationBanner, 5, 2.0, 3);
+    // Scale the banner canvas to be proportional to the 1600px-wide canvas
+    const notifCanvas = notificationBanner.querySelector('canvas');
+    notificationBanner.style.width = (notifCanvas.width / 1600 * 100) + '%';
+    notifCanvas.style.width = '100%';
+    notifCanvas.style.height = 'auto';
 
     function showNotification(text) {
         notificationText.innerHTML = text;
@@ -42,12 +47,13 @@
         setTimeout(() => notificationBanner.classList.remove('active'), 2500);
     }
 
-    const paper1 = makePaper(2, 4, `
-        <p>Good traveller, I am Brother Aldric, a humble servant of the faith.</p>
-        <p>Many seasons past, the King cast me from these lands for speaking truths he did not wish to hear. I hold no ill will toward him, yet the exile weighs heavy upon my soul.</p>
-        <p>The royal guard would turn me away at the gate, but you may walk freely where I cannot. I ask of you this: seek audience with the King and plead my case — I wish only to return in peace, to tend to my lifestock. Nothing more.</p>
-        <p>May your words find favour in his ears.</p>
-        <p style="text-align:right; margin-top: 1em;">— Brother Aldric</p>
+    const paper1 = makePaper(3, 5, `
+        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> Ah, a traveller. You look like someone who knows how to handle themselves. Might I have a word?</div>
+        <div class="dialogue-line you-line"><span class="speaker">— You:</span> Speak freely.</div>
+        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> I am Brother Aldric. Many seasons past, the King cast me from these lands for speaking truths he did not wish to hear. I hold no ill will — yet the exile weighs heavy on my soul.</div>
+        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> The royal guard would turn me away at the gate, but you may walk freely where I cannot. Would you seek audience with the King and plead my case? I wish only to return in peace, to tend to my livestock.</div>
+        <div class="dialogue-line you-line"><span class="speaker">— You:</span> I will see what can be done.</div>
+        <div class="dialogue-line guard-line"><span class="speaker">— Aldric:</span> May your words find favour in his ears. Thank you, traveller.</div>
     `);
 
     const paper2 = makePaper(4, 5, `
@@ -94,7 +100,7 @@
     // auto: false → fires on E press while on tile
     // ==========================================================
     const triggers = [
-        { x: 16, y: 15, progress: 0, paper: paper1, facing: 'left', auto: false, hint: 'Press E to interact' },
+        { x: 16, y: 15, progress: 0, paper: paper1, facing: 'left', auto: false, hint: 'Press <span style="color:var(--primary-text-color)">E</span> to interact' },
         { x:  8, y:  7, progress: 1, paper: paper2, facing: null,   auto: true  },
         { x:  5, y:  5, progress: 2, paper: paper3, facing: 'up',   auto: false },
         { x: 16, y: 15, progress: 3, paper: paper4, facing: 'left',   auto: false },

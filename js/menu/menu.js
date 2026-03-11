@@ -49,7 +49,8 @@ function transition(onMidTransition, doubleDuration = false) {
 
     veil.addEventListener('click', (event) => {
         // Only close when clicking the veil backdrop itself (not inner content)
-        if (event.target === veil) closeTopmost();
+        // Don't interfere while a quest paper is open
+        if (event.target === veil && !document.querySelector('#paperHolder .paper.active')) closeTopmost();
     });
 
     // Draw the paper backgrounds once.

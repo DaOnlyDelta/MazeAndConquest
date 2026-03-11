@@ -7,7 +7,7 @@ function drawCurvedBanner(parentDiv, bannerWidth, bannerHeight) {
     // ==========================================================
     // Sprite tile sizes (in source pixels)
     // ==========================================================
-    const scale = 1.5;
+    const scale = 2.5;
 
     const ltCornerW = 100;
     const ltCornerH = 67;
