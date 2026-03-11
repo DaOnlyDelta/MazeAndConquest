@@ -1,3 +1,8 @@
+/**
+ * quests.js
+ * Quest/dialogue system: paper popups, notification banners, trigger definitions,
+ * waypoint progression, and E-key interaction handling.
+ */
 (function() {
     let questProgress = 0;
     const paperHolder = document.getElementById('paperHolder');

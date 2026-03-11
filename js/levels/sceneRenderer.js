@@ -6,7 +6,7 @@
 (function () {
     const { ctx, TILES_X, TILES_Y, TILE_DISPLAY_SIZE } = window.canvasConfig;
     const { waterImg, g5, g3, g2, g1 } = window.levelAssets;
-    const { drawTileRow: drawTileRowBase, drawWaterFoam, drawShadow, drawRockInWater, drawStaticRock, drawBush, drawBuilding, drawTree, drawSheep, drawUnit, drawPlayer, drawWaypoint } = window.drawingUtils;
+    const { drawTileRow, drawWaterFoam, drawShadow, drawRockInWater, drawStaticRock, drawBush, drawBuilding, drawTree, drawSheep, drawUnit, drawPlayer, drawWaypoint } = window.drawingUtils;
 
     // ==========================================================
     // Waypoint Markers
@@ -100,9 +100,6 @@
         // Global sprite queue sorted by depth Y (larger Y draws in front).
         const sprites = [];
 
-        // Ground tiles render immediately.
-        const drawTileRow = drawTileRowBase;
-
         // Queue player once into global depth queue.
         {
             const _py = window.player ? window.player.getY() : 0;
@@ -134,7 +131,6 @@
             drawWaterFoam(window.levelAssets.foamImg, 1, [13, 14, 15, 16, 17, 18, 19, 20, 21]);
             drawWaterFoam(window.levelAssets.foamImg, 2, [14, 22]);
             drawWaterFoam(window.levelAssets.foamImg, 3, [10, 11, 12, 13, 22]);
-            drawWaterFoam(window.levelAssets.foamImg, 3, [22]);
             drawWaterFoam(window.levelAssets.foamImg, 4, [22]);
             drawWaterFoam(window.levelAssets.foamImg, 5, [0, 21, 22]);
             drawWaterFoam(window.levelAssets.foamImg, 6, [0, 20]);
@@ -407,81 +403,6 @@
                 { sx: 1, sy: 1 },
                 { sx: 1, sy: 1 },
                 { sx: 2, sy: 1 }
-            ]);
-
-            // Y=7
-            drawTileRow(g5, 7, [
-                { x: 13, sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 2, sy: 1 }
-            ]);
-
-            // Y=6
-            drawTileRow(g5, 6, [
-                { x: 13, sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 2 },
-                { sx: 2, sy: 2 }
-            ]);
-
-            // Y=5
-            drawTileRow(g5, 5, [
-                { x: 11, sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 2, sy: 1 }
-            ]);
-
-            // Y=4
-            drawTileRow(g5, 4, [
-                { x: 11, sx: 0, sy: 0 },
-                { sx: 1, sy: 0 },
-                { sx: 1, sy: 0 },
-                { sx: 1, sy: 0 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 2, sy: 1 }
-            ]);
-
-            // Y=3
-            drawTileRow(g5, 3, [
-                { x: 15, sx: 0, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 1, sy: 1 },
-                { sx: 2, sy: 0 }
             ]);
 
         }

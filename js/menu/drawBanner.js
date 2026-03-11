@@ -1,4 +1,8 @@
-// Draws a ribbon/banner into a canvas appended to `parent`.
+/**
+ * drawBanner.js
+ * Draws a ribbon/banner into a canvas appended to a parent element.
+ * Supports multiple colors via sprite row index.
+ */
 // - `width`: number of middle segments
 // - `scale`: pixel scale multiplier (keeps pixel-art crisp)
 // - `color`: row index in the sprite (0=blue, 1=red, 2=yellow, 3=purple, ...)

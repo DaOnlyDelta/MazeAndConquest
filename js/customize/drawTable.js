@@ -1,5 +1,8 @@
-// Draws the parchment-style paper background into a canvas appended to `parentDiv`.
-// `paperWidth`/`paperHeight` are counts of middle tiles (not pixels).
+/**
+ * drawTable.js
+ * Draws the wood table background (9-slice) into a canvas appended to a parent div.
+ * Used as the customize screen's main container background.
+ */
 function drawTable(parentDiv, paperWidth, paperHeight) {
     // Canvas setup
     const canvas = document.createElement('canvas');

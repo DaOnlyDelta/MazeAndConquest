@@ -1,3 +1,8 @@
+/**
+ * animationLoop.js
+ * Main requestAnimationFrame loop. Updates animations, player position, and scene
+ * rendering each frame. Supports registering per-frame tick callbacks.
+ */
 (function() {
     let lastTimestamp = null;
     const tickCallbacks = [];

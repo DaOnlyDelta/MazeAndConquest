@@ -1,5 +1,8 @@
-// Draws the parchment-style paper background into a canvas appended to `parentDiv`.
-// `paperWidth`/`paperHeight` are counts of middle tiles (not pixels).
+/**
+ * drawRegularPaper.js
+ * Draws a 9-slice parchment paper background (RegularPaper) into a canvas
+ * appended to a parent div. Used for the customize display wrapper.
+ */
 function drawRegularPaper(parentDiv, paperWidth, paperHeight) {
     // Canvas setup
     const canvas = document.createElement('canvas');

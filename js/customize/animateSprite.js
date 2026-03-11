@@ -1,17 +1,9 @@
-// Sprite-sheet animation helper.
-// Usage:
-//   const sprite = createSpriteDiv(parent);
-//   const ctrl = animateSprite(sprite, {
-//     imageUrl: './assets/Units/Blue Units/Monk/monk.png',
-//     frameWidth: 64,
-//     // frameHeight: 64,  // optional (defaults to image height)
-//     // frameCount: 6,    // optional (defaults to imageWidth / frameWidth)
-//     fps: 8,
-//     scale: 2,
-//     loop: true,
-//   });
-//   // ctrl.stop() / ctrl.play() / ctrl.setFrame(n)
-
+/**
+ * animateSprite.js
+ * Sprite-sheet animation helper using background-position.
+ * Creates and animates horizontal sprite sheets with configurable
+ * frame size, speed, scale, and looping.
+ */
 (function () {
 	function clampInt(value, min, max) {
 		const n = Math.floor(Number(value));

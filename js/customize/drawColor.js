@@ -1,7 +1,8 @@
-// Draws a ribbon/banner into a canvas appended to `parent`.
-// - `width`: number of middle segments
-// - `scale`: pixel scale multiplier (keeps pixel-art crisp)
-// - `color`: row index in the sprite (0=blue, 1=red, 2=yellow, 3=purple, ...)
+/**
+ * drawColor.js
+ * Draws a single color swatch from the BigRibbons sprite sheet.
+ * Used in the customize screen for color selection slots.
+ */
 function drawColor(parent, scale, color) {
     // Canvas setup
     const canvas = document.createElement('canvas');

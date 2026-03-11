@@ -1,4 +1,8 @@
-// Draws the parchment-style paper background into a canvas appended to `parentDiv`.
+/**
+ * drawPaper.js
+ * Draws a 9-slice parchment paper background (SpecialPaper) into a canvas
+ * appended to a parent div. Used for settings/about modal backgrounds.
+ */
 // `paperWidth`/`paperHeight` are counts of middle tiles (not pixels).
 function drawPaper(parentDiv, paperWidth, paperHeight) {
     // Canvas setup

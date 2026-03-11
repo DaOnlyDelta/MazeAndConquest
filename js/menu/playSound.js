@@ -1,3 +1,9 @@
+/**
+ * playSound.js
+ * Audio system: SFX playback, background music playlist (loops 12 tracks),
+ * volume/mute controls, and browser autoplay-policy unlock.
+ */
+
 // ==========================================================
 // Audio globals (read by menu.js)
 // ==========================================================

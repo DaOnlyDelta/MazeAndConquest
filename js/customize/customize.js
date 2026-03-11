@@ -1,10 +1,8 @@
-// Customize screen controller.
-// Responsibilities:
-// - Render the table/paper UI
-// - Manage hero + color single-select
-// - Animate the selected unit idle sprite in the display
-// - On hover, temporarily lift the display above the veil (but not the whole screen)
-
+/**
+ * customize.js
+ * Customize screen controller: table/paper UI, hero + color single-select,
+ * animated sprite display, and hover overlay (portal to body for z-index).
+ */
 (function () {
     // ==========================================================
     // Screen elements + navigation

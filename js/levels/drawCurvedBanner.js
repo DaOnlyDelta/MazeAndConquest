@@ -1,3 +1,8 @@
+/**
+ * drawCurvedBanner.js
+ * Draws a 9-slice curved banner (top/middle/bottom rows) into a canvas
+ * appended to a parent div. Used for quest paper backgrounds.
+ */
 function drawCurvedBanner(parentDiv, bannerWidth, bannerHeight) {
     // Canvas setup
     const canvas = document.createElement('canvas');

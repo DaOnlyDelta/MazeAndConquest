@@ -1,4 +1,7 @@
-// Draws the slider border/bar base into a canvas appended to `parent`.
+/**
+ * drawSliderBorder.js
+ * Draws the slider bar base/border into a canvas appended to a parent element.
+ */
 // `width` is the number of middle segments.
 function drawSliderBorder(parent, width, scale) {
     // Canvas setup

@@ -1,3 +1,8 @@
+/**
+ * menu.js
+ * Main menu controller: screen navigation, modal windows (about/settings),
+ * button interactions, audio/graphics toggles, and volume sliders.
+ */
 function transition(onMidTransition, doubleDuration = false) {
     veil.classList.add('transition');
     const duration = doubleDuration ? 1600 : 800;

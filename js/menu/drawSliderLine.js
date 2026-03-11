@@ -1,4 +1,8 @@
-// Draws the slider fill into a clipped container (".sliderHolder") inside `parent`.
+/**
+ * drawSliderLine.js
+ * Draws the slider fill bar into a clipped container inside a parent element.
+ * The container width is adjusted at runtime to represent the current value.
+ */
 // The holder is what we resize to visually represent the current value.
 function drawSliderLine(parent, width, scale) {
     // Holder (clipped)

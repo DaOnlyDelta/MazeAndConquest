@@ -1,3 +1,9 @@
+/**
+ * grid.js
+ * Defines the tile grid (25x19, 3 layers) with slope mechanics and movement validation.
+ * Layers: 0=ground, 1=elevated, 2=top platform.
+ * Tile values: 0=empty, 1=walkable, 2=left-slope, 3=right-slope.
+ */
 (function() {
     // Grid layout
     // 1 = Grass layer
@@ -82,16 +88,9 @@
         },
 
         /**
-         * Returns true if the tile at (x, y) is walkable on the current layer.
-         */
-        isWalkable(x, y) {
-            if (x < 0 || x >= 25 || y < 0 || y >= 19) return false;
-            return this.layers[currentLayer][y][x] !== 0;
-        },
-
-        /**
          * Returns true if the player can move from (fromX, fromY) to (toX, toY).
-         * Slope tiles (2 = left slope, 3 = right slope) block vertical entry.
+         * Slope tiles (2 = left slope, 3 = right slope) are blocked here;
+         * they are handled separately via getSlopeTransition.
          */
         canMoveTo(fromX, fromY, toX, toY) {
             if (toX < 0 || toX >= 25 || toY < 0 || toY >= 19) return false;

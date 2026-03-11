@@ -1,10 +1,11 @@
+/**
+ * player.js
+ * Handles player grid movement, input (arrow keys + WASD), position interpolation,
+ * and slope transitions. Exports state getters via window.player.
+ */
 (function() {
-    // The grid is 25x20, so we'll make a 2d array to represent the player's position on the grid
-    // but to more accurately represent it, we'll make it so every tile has 4 sub-tiles (top-left, top-right, bottom-left, bottom-right) to allow for smoother movement and better collision detection
     const GRID_WIDTH = 25;
     const GRID_HEIGHT = 19;
-    const SUBTILES_PER_TILE = 4;
-    const SUBTILE_SIZE = 16; // Each subtile is 16x16 pixels (since our tiles are 64x64)
 
     // Player's position
     let playerX = 18;
