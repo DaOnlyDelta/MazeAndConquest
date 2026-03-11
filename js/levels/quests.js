@@ -46,10 +46,21 @@
     notifCanvas.style.width = '100%';
     notifCanvas.style.height = 'auto';
 
+    let notifTimeout = null;
+
     function showNotification(text) {
         notificationText.innerHTML = text;
         notificationBanner.classList.add('active');
-        setTimeout(() => notificationBanner.classList.remove('active'), 2500);
+        if (notifTimeout) clearTimeout(notifTimeout);
+        notifTimeout = setTimeout(() => { notificationBanner.classList.remove('active'); notifTimeout = null; }, 2500);
+    }
+
+    function dismissNotification() {
+        if (!notifTimeout) return false;
+        clearTimeout(notifTimeout);
+        notifTimeout = null;
+        notificationBanner.classList.remove('active');
+        return true;
     }
 
     const paper1 = makePaper(3, 5, `
@@ -212,6 +223,9 @@
             window.sceneRenderer.resetCameraZoom();
             return;
         }
+
+        // Dismiss notification banner early (don't consume the key press)
+        dismissNotification();
 
         // Block E during the zoom-in animation
         if (triggerFiring) return;

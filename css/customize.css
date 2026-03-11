@@ -159,8 +159,8 @@
 #displayWrapper.displayOverlay {
     /* Temporary overlay state used on hover (ported to <body>) */
     position: fixed;
-    top: 52%;
-    left: 50%;
+    top: 51.6%;
+    left: 50.1%;
     transform: translate(-50%, -50%) scale(1);
     transition: transform 0.12s ease;
     z-index: 1000;

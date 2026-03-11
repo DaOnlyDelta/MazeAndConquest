@@ -8,7 +8,7 @@
     // Water Foam Animation
     // ==========================================================
     let foamAnimationFrame = 0;
-    const FOAM_ANIMATION_SPEED = 10; // Higher = slower animation
+    const FOAM_ANIMATION_SPEED = 15; // Higher = slower animation
     let foamFrameCounter = 0;
     const FOAM_FRAME_WIDTH = 192;
     const FOAM_FRAME_HEIGHT = 192;
@@ -18,7 +18,7 @@
     // Water Rock Animation
     // ==========================================================
     let rockAnimationFrame = 0;
-    const ROCK_ANIMATION_SPEED = 10;
+    const ROCK_ANIMATION_SPEED = 15;
     let rockFrameCounter = 0;
     const ROCK_FRAME_WIDTH = 64;
     const ROCK_FRAME_HEIGHT = 64;
