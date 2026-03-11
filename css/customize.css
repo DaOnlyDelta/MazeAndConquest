@@ -180,4 +180,11 @@
     pointer-events: none;
 }
 
-
+/* Keep the sprite positioned correctly when #displayWrapper is portaled to <body>. */
+#displayWrapper.displayOverlay #display {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
