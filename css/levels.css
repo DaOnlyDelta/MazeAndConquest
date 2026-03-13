@@ -1,3 +1,8 @@
+/*
+ * levels.css
+ * Level scene styles: canvas container, dialogue papers, end-screen overlay, and notifications.
+ */
+
 #level {
     display: none;
     position: absolute;
@@ -80,6 +85,81 @@
 
 #level #paperHolder .paper.active {
     top: 50%;
+}
+
+#level #paperHolder .end-paper {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: fit-content;
+    transition: top ease 1s;
+    z-index: 100001;
+}
+
+#level #paperHolder .end-paper.active {
+    top: 50%;
+}
+
+#level #paperHolder .end-paper .end-paper-content {
+    position: absolute;
+    top: 15%;
+    left: 18%;
+    right: 14%;
+    bottom: 16%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8em;
+    color: black;
+}
+
+#level #paperHolder .end-paper .end-paper-content h2 {
+    margin: 0;
+    font-size: 7cqh;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+#level #paperHolder .end-paper .end-paper-content .end-time {
+    margin: 3.8cqh 0;
+    font-size: 4.8cqh;
+}
+
+#level #paperHolder .end-paper .end-paper-content .end-btn {
+    width: 60%;
+    padding: 0.45em 0.8em;
+    border: 0.12em solid #1f1f1f;
+    border-radius: 0.25em;
+    background: #efe0bd;
+    color: #111;
+    font-size: 3.1cqh;
+    font-family: inherit;
+    cursor: var(--cursor-pointer);
+    transition: transform 0.12s ease, background-color 0.12s ease;
+}
+
+#level #paperHolder .end-paper .end-paper-content .end-btn:hover {
+    transform: scale(1.03);
+    background: #f8ebca;
+}
+
+#level #paperHolder .end-paper .end-paper-x {
+    position: absolute;
+    top: 6%;
+    right: 8%;
+    width: 8%;
+    aspect-ratio: 1;
+    background-image: url('../assets/UI Elements/UI Elements/Icons/Icon_09.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: var(--cursor-pointer);
+    z-index: 10;
+    transition: scale 0.1s ease;
+}
+
+#level #paperHolder .end-paper .end-paper-x:hover {
+    scale: 1.2;
 }
 
 #level #paperHolder .paper .paper-text .dialogue-line {

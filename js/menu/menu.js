@@ -79,6 +79,7 @@ function transition(onMidTransition, doubleDuration = false) {
         transition(() => {
             mainMenu.style.display = 'none';
             level.style.display = 'flex';
+            window.player?.setMovementLocked(false);
         }, true);
     }
 

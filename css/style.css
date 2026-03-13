@@ -1,3 +1,8 @@
+/*
+ * style.css
+ * Global styles: font loading, reset, root variables, and shared base element rules.
+ */
+
 @font-face {
     font-family: Caveat Brush;
     src: url(../font/CaveatBrush-Regular.ttf);

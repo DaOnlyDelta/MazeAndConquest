@@ -16,6 +16,7 @@
     let moveDirection = null; // 'up', 'down', 'left', 'right'
     let moveProgress = 0; // Progress of the current move (0 to 1)
     let facingLeft = true; // Persisted horizontal facing when idle
+    let movementLocked = true;
 
     // Track currently pressed keys to allow continuous movement without OS key repeat delay
     const keysPressed = {
@@ -49,6 +50,7 @@
 
     function tryStartMove() {
         if (isMoving) return;
+        if (movementLocked) return;
         if (window.sceneRenderer && window.sceneRenderer.isZoomed()) return; // Disable movement while zoomed
 
         let newX = playerX;
@@ -136,6 +138,17 @@
         moveProgress = 0;
     }
 
+    function setMovementLocked(locked) {
+        movementLocked = !!locked;
+        if (movementLocked) {
+            cancelMovement();
+            keysPressed.ArrowUp = false;
+            keysPressed.ArrowDown = false;
+            keysPressed.ArrowLeft = false;
+            keysPressed.ArrowRight = false;
+        }
+    }
+
     // Export player state and update function for use in other modules
     window.player = {
         getX: () => playerX,
@@ -144,8 +157,10 @@
         flipped: () => facingLeft, // Persisted sprite flip direction
         getMoveDirection: () => moveDirection,
         getMoveProgress: () => moveProgress,
+        isMovementLocked: () => movementLocked,
         updatePosition: updatePlayerPosition,
         cancelMovement: cancelMovement,
+        setMovementLocked: setMovementLocked,
         updateFacingFromDirection: updateFacingFromDirection
     };
 })();

@@ -4,7 +4,8 @@
  * waypoint progression, and E-key interaction handling.
  */
 (function() {
-    let questProgress = 0;
+    let questProgress = 5;
+    const runStartedAt = Date.now();
     const paperHolder = document.getElementById('paperHolder');
     const veil = document.getElementById('veil');
     let isPaperActive = false;
@@ -62,6 +63,69 @@
         notificationBanner.classList.remove('active');
         return true;
     }
+
+    // End screen (curved banner)
+    function formatDuration(ms) {
+        const totalSeconds = Math.floor(ms / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    function buildEndPaper() {
+        const paper = document.createElement('div');
+        paper.classList.add('end-paper');
+        paperHolder.appendChild(paper);
+        drawCurvedBanner(paper, 2, 2);
+
+        const paperCanvas = paper.querySelector('canvas');
+        if (paperCanvas) {
+            paper.style.width = (paperCanvas.width / 1600 * 100) + '%';
+            paperCanvas.style.width = '100%';
+            paperCanvas.style.height = 'auto';
+        }
+
+        const content = document.createElement('div');
+        content.classList.add('end-paper-content');
+        content.innerHTML = `
+            <h2>The End</h2>
+            <p class="end-time"></p>
+            <button class="end-btn end-btn-menu">Menu</button>
+        `;
+        paper.appendChild(content);
+
+        const x = document.createElement('div');
+        x.classList.add('end-paper-x');
+        paper.appendChild(x);
+
+        const endTime = content.querySelector('.end-time');
+        const menuBtn = content.querySelector('.end-btn-menu');
+
+        function close() {
+            paper.classList.remove('active');
+            veil.classList.remove('active');
+            window.player.setMovementLocked(false);
+        }
+
+        x.addEventListener('click', close);
+
+        menuBtn.addEventListener('click', () => {
+            window.location.reload();
+        });
+
+        function show() {
+            endTime.textContent = `Completed in ${formatDuration(Date.now() - runStartedAt)}`;
+            paper.classList.add('active');
+            veil.classList.add('active');
+            window.player.cancelMovement();
+            window.player.setMovementLocked(true);
+            window.sceneRenderer.resetCameraZoom();
+        }
+
+        return { show };
+    }
+
+    const endPaper = buildEndPaper();
 
     const paper1 = makePaper(3, 5, `
         <div class="dialogue-line"><span class="speaker">— Aldric:</span> Ah, a traveller. You look like someone who knows how to handle themselves. Might I have a word?</div>
@@ -136,7 +200,11 @@
         3: () => window.sceneRenderer.addWaypoint(16, 15),
         4: () => window.sceneRenderer.addWaypoint(15, 13),
         5: () => window.sceneRenderer.addWaypoint(5, 5),
-        6: () => { window.sceneRenderer.clearWaypoints(); showNotification('The End.'); window.playSound('winner'); },
+        6: () => {
+            window.sceneRenderer.clearWaypoints();
+            window.playSound('winner');
+            endPaper.show();
+        },
     };
 
     // Initial waypoint
