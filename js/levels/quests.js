@@ -49,10 +49,14 @@
 
     let notifTimeout = null;
 
-    function showNotification(text) {
+    function showNotification(text, { persistent = false } = {}) {
         notificationText.innerHTML = text;
         notificationBanner.classList.add('active');
         if (notifTimeout) clearTimeout(notifTimeout);
+        if (persistent) {
+            notifTimeout = null;
+            return;
+        }
         notifTimeout = setTimeout(() => { notificationBanner.classList.remove('active'); notifTimeout = null; }, 2500);
     }
 
@@ -107,7 +111,10 @@
             window.player.setMovementLocked(false);
         }
 
-        x.addEventListener('click', close);
+        x.addEventListener('click', () => {
+            close();
+            showNotification('The End', { persistent: true });
+        });
 
         menuBtn.addEventListener('click', () => {
             window.location.reload();
