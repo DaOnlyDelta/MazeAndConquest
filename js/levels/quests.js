@@ -4,7 +4,7 @@
  * waypoint progression, and E-key interaction handling.
  */
 (function() {
-    let questProgress = 5;
+    let questProgress = 0;
     const runStartedAt = Date.now();
     const paperHolder = document.getElementById('paperHolder');
     const veil = document.getElementById('veil');
