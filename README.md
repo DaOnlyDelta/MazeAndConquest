@@ -56,16 +56,14 @@ Canvas API (level rendering + UI drawing helpers)
 
 ## Screenshots
 
-<!-- Add exactly 3 screenshots in this section: Main Menu, Customize, Level -->
-
 ### Main Menu
-<!-- Paste screenshot 1 here -->
+![Main Menu](./screenshots/mainMenu.png)
 
 ### Customize
-<!-- Paste screenshot 2 here -->
+![Customize](./screenshots/customize.png)
 
 ### Level
-<!-- Paste screenshot 3 here -->
+![Level](./screenshots/level.png)
 
 ## Project structure
 
